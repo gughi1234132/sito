@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Studiocodice | Digital Agency & Ingegneria del Valore</title>
     
-    <meta name="description" content="Agenzia digitale d'élite. Progettiamo e sviluppiamo asset web proprietari ad altissime prestazioni per brand che esigono l'eccellenza.">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -100,12 +98,24 @@
         .btn-premium span { position: relative; z-index: 2; transition: color 0.4s ease; }
 
         /* ==========================================================================
-           2. HEADER & MENU MOBILE (Drawer Compatto)
+           2. HEADER & MENU MOBILE (Effetto Glassmorphism)
            ========================================================================== */
         .site-header { 
             position: fixed; top: 0; width: 100%; padding: var(--space-md) 0; 
-            z-index: 1000; mix-blend-mode: difference; color: var(--color-white); transition: padding 0.5s ease;
+            z-index: 1000; transition: padding 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+            /* Stile Dark Glass di Base */
+            background-color: rgba(7, 7, 7, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--color-white);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+        .site-header.light-mode {
+            background-color: rgba(240, 239, 234, 0.85);
+            color: var(--color-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-sans); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase; z-index: 1010; }
         
@@ -128,7 +138,7 @@
         
         .menu-toggle {
             display: block; background: none; border: none; cursor: pointer;
-            width: 30px; height: 20px; position: relative; z-index: 1010; mix-blend-mode: difference; color: var(--color-white);
+            width: 30px; height: 20px; position: relative; z-index: 1010; color: inherit;
         }
         .menu-toggle span {
             display: block; width: 100%; height: 2px; background-color: currentColor;
@@ -136,8 +146,8 @@
         }
         .menu-toggle span:first-child { top: 0; }
         .menu-toggle span:last-child { bottom: 0; }
-        .menu-open .menu-toggle span:first-child { transform: rotate(45deg); top: 9px; }
-        .menu-open .menu-toggle span:last-child { transform: rotate(-45deg); bottom: 9px; }
+        .menu-open .menu-toggle span:first-child { transform: rotate(45deg); top: 9px; color: var(--color-white); }
+        .menu-open .menu-toggle span:last-child { transform: rotate(-45deg); bottom: 9px; color: var(--color-white); }
 
         @media (min-width: 1024px) { 
             .nav-links { display: flex; } 
@@ -146,18 +156,22 @@
         }
 
         /* ==========================================================================
-           3. HERO (Con UI visibile su Mobile)
+           3. HERO (Fix Layout Mobile e Colore Testo)
            ========================================================================== */
         .hero { 
             min-height: 100vh; display: flex; align-items: center; 
             background-color: var(--color-dark); color: var(--color-stone);
-            overflow: hidden; position: relative; padding-top: 100px; padding-bottom: 40px;
+            overflow: hidden; position: relative; padding-top: 120px; padding-bottom: 60px;
         }
         .hero-layout { 
-            display: grid; grid-template-columns: 1fr; gap: var(--space-md); 
+            display: flex; flex-direction: column; gap: 2rem; 
             position: relative; z-index: 2; width: 100%;
         }
-        @media (min-width: 1024px) { .hero-layout { grid-template-columns: 1.2fr 0.8fr; align-items: center; } }
+        @media (min-width: 1024px) { 
+            .hero-layout { flex-direction: row; align-items: center; justify-content: space-between; } 
+            .hero-title { width: 55%; }
+            .hero-visual { width: 45%; }
+        }
 
         .hero-title { display: flex; flex-direction: column; }
         .hero-title .line { overflow: hidden; display: block; }
@@ -178,7 +192,7 @@
         .hero-visual { 
             position: relative; height: 350px; width: 100%; perspective: 1200px; 
             display: flex; justify-content: center; align-items: center;
-            transform: scale(0.65); transform-origin: top center; margin-top: -30px;
+            transform: scale(0.75); transform-origin: center top; margin-top: 1rem;
         }
         @media (min-width: 1024px) { .hero-visual { height: 50vh; transform: scale(1); margin-top: 0; } }
 
@@ -203,7 +217,7 @@
         @keyframes orbit { 100% { transform: rotate(360deg); } }
 
         /* ==========================================================================
-           4. METRICHE (Riga Unica anche su Mobile)
+           4. METRICHE
            ========================================================================== */
         .metrics-section { 
             background: var(--color-dark); color: var(--color-white); 
@@ -316,7 +330,7 @@
             <div class="container hero-layout">
                 <div class="hero-title js-hero-anim">
                     <span class="line"><span>Ingegneria</span></span>
-                    <span class="line"><span>del Valore.</span></span>
+                    <span class="line"><span>del <span class="italic-accent">Valore.</span></span></span>
                     <p class="hero-subtitle">Non creiamo semplici siti web. Sviluppiamo asset digitali proprietari ad alte prestazioni per brand che esigono l'eccellenza.</p>
                 </div>
                 
@@ -426,7 +440,6 @@
                                     <p class="highlight">+315% Lead Qualificati</p>
                                 </div>
                             </div>
-
                             <a href="#" class="btn-premium" style="width: max-content; padding: 0.6rem 1.4rem; font-size: 0.75rem;">
                                 <span>Visita il sito ↗</span>
                             </a>
@@ -452,7 +465,6 @@
                                     <p class="highlight">Latenza abbattuta a 0.4s</p>
                                 </div>
                             </div>
-                            
                             <a href="#" class="btn-premium" style="width: max-content; padding: 0.6rem 1.4rem; font-size: 0.75rem;">
                                 <span>Visita il sito ↗</span>
                             </a>
@@ -561,7 +573,7 @@
                 }
             }, 100);
 
-            /* --- 3. Scroll Reveal & Titoli Awwwards via Intersection Observer --- */
+            /* --- 3. Scroll Reveal & Titoli Awwwards --- */
             const reveals = document.querySelectorAll('.js-reveal, .js-wow-reveal');
             const scrollObserver = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
@@ -574,7 +586,7 @@
             
             reveals.forEach(el => scrollObserver.observe(el));
 
-            /* --- 4. Logica Dark/Light Mode Header --- */
+            /* --- 4. Logica Glassmorphism Header (Dark/Light Mode) --- */
             const header = document.querySelector('.js-header');
             const sections = document.querySelectorAll('section');
             
@@ -589,11 +601,9 @@
                 });
                 
                 if(!isDarkModeSection) {
-                    header.style.mixBlendMode = 'normal';
-                    header.style.color = 'var(--color-dark)';
+                    header.classList.add('light-mode');
                 } else {
-                    header.style.mixBlendMode = 'difference';
-                    header.style.color = 'var(--color-white)';
+                    header.classList.remove('light-mode');
                 }
 
                 if(window.scrollY > 50) {

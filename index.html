@@ -1,763 +1,647 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studiocodice | Sviluppo Web Sartoriale</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Studiocodice | Digital Agency & Ingegneria del Valore</title>
+    
+    <meta name="description" content="Agenzia digitale d'élite. Progettiamo e sviluppiamo asset web proprietari ad altissime prestazioni per brand che esigono l'eccellenza.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* =========================================
-           1. VARIABILI E IMPOSTAZIONI BASE
-        ========================================= */
+        /* ==========================================================================
+           1. CORE SYSTEM & TOKENS PRESTIGIOSI
+           ========================================================================== */
         :root {
             --color-white: #FFFFFF;
-            --color-stone: #F3F2EE;   
-            --color-dark: #0A0A0A;    
-            --color-accent: #B89053; 
+            --color-stone: #F0EFEA;   
+            --color-dark: #070707;    
+            --color-dark-alt: #121212;
+            --color-accent: #C39F61; 
             
-            --theme-1: #0A0A0A; 
-            --theme-2: #141414; 
-            --theme-3: #1A1A1A; 
-            
-            --font-serif: 'Instrument Serif', serif;
-            --font-sans: 'Manrope', sans-serif;
+            --font-serif: 'Instrument Serif', Georgia, serif;
+            --font-sans: 'Manrope', system-ui, sans-serif;
             
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+
+            /* Sistema di Spaziatura Fluida */
+            --space-xs: clamp(0.75rem, 0.69rem + 0.29vw, 1rem);
+            --space-sm: clamp(1rem, 0.88rem + 0.58vw, 1.5rem);
+            --space-md: clamp(1.5rem, 1.38rem + 0.58vw, 2rem);
+            --space-lg: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+            --space-section: clamp(5rem, 4.5rem + 5vw, 8rem);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; }
-        body { background-color: var(--color-white); color: var(--color-dark); font-family: var(--font-sans); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        ::selection { background: var(--color-dark); color: var(--color-white); }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         
-        a { text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
-        a:hover { opacity: 0.5; }
+        html { scroll-behavior: smooth; font-size: 16px; background: var(--color-dark); }
+
+        body { 
+            background-color: var(--color-stone); 
+            color: var(--color-dark); 
+            font-family: var(--font-sans); 
+            line-height: 1.5; 
+            -webkit-font-smoothing: antialiased; 
+            overflow-x: hidden; 
+        }
+
+        /* TEXTURE NOISE ANALOGICA GLOBALE */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; opacity: 0.45;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
+        }
+        body.dark-mode .noise-overlay { mix-blend-mode: overlay; opacity: 0.15; }
+
+        a, button { outline: none; cursor: pointer; text-decoration: none; color: inherit; }
         
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
-        .section { padding: 5rem 0; }
-        .bg-stone { background-color: var(--color-stone); }
-        .text-white { color: var(--color-white) !important; }
-
-        .bg-grid {
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-            background-size: 50px 50px;
+        .container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 var(--space-md); position: relative; }
+        .section { padding: var(--space-section) 0; }
+        
+        /* TIPOGRAFIA */
+        h2 { 
+            font-size: clamp(2.5rem, 2rem + 4vw, 5rem); 
+            letter-spacing: -0.02em; 
+            font-family: var(--font-serif); 
+            font-weight: 400; 
+            line-height: 1; 
+            margin-bottom: var(--space-lg);
         }
+        .italic-accent { font-style: italic; color: var(--color-accent); }
 
-        h2 { font-size: clamp(3rem, 7vw, 6rem); letter-spacing: -0.02em; margin-bottom: 1.5rem; font-family: var(--font-serif); font-weight: 400; line-height: 1; }
-        p { font-size: 1.05rem; color: #333; }
-
-        .text-accent { color: var(--color-dark); font-weight: 600; border-bottom: 1px solid var(--color-dark); padding-bottom: 0.1em; }
-        .italic-accent { font-style: italic; font-weight: 400; }
-
-        /* Bottoni Brutalisti */
-        .btn-outline { 
-            display: inline-flex; align-items: center; justify-content: center; overflow: hidden;
-            padding: 1.2rem 2.5rem; border: 1px solid var(--color-dark); color: var(--color-dark); 
-            font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; 
-            transition: all 0.4s var(--ease-out-expo); position: relative; background: transparent;
-            width: 100%; text-align: center;
+        /* BUTTONS */
+        .btn-premium { 
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: calc(var(--space-sm) * 0.8) calc(var(--space-md) * 1.2); 
+            background: var(--color-dark); color: var(--color-white); 
+            font-family: var(--font-sans); font-weight: 600; font-size: 0.85rem; 
+            text-transform: uppercase; letter-spacing: 0.08em; border-radius: 100px;
+            position: relative; overflow: hidden; transition: box-shadow 0.4s ease;
+            border: none;
         }
-        .btn-outline::before {
-            content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 100%;
-            background: var(--color-dark); transition: transform 0.4s var(--ease-out-expo); z-index: -1;
+        .btn-premium::after {
+            content: ''; position: absolute; inset: 0; background: var(--color-accent);
+            border-radius: 100px; transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.5s var(--ease-out-expo); z-index: -1;
         }
-        .btn-outline:hover { color: var(--color-white); }
-        .btn-outline:hover::before { transform: translateY(-100%); }
+        .btn-premium:hover::after { transform: scaleY(1); transform-origin: top; }
+        .btn-premium:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.15); color: var(--color-dark); }
+        .btn-premium span { position: relative; z-index: 2; transition: color 0.4s ease; }
 
-        /* =========================================
-           2. HEADER
-        ========================================= */
+        /* ==========================================================================
+           2. HEADER & MOBILE MENU (Ripristinato)
+           ========================================================================== */
         .site-header { 
-            position: fixed; top: 0; left: 0; width: 100%; padding: 1.2rem 0; 
-            z-index: 1000; background-color: transparent; 
-            transition: all 0.5s var(--ease-out-expo);
-            transform: translateY(-100%);
-            animation: slideDownHeader 1s var(--ease-out-expo) 0.5s forwards;
+            position: fixed; top: 0; width: 100%; padding: var(--space-md) 0; 
+            z-index: 1000; mix-blend-mode: difference; color: var(--color-white);
+            transition: padding 0.5s ease;
         }
-        @keyframes slideDownHeader { to { transform: translateY(0); } }
-        .site-header.scrolled { 
-            padding: 1rem 0; background-color: rgba(255, 255, 255, 0.98); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.08); 
-        }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; position: relative; }
-        .logo { font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; z-index: 1010; letter-spacing: 0.05em; text-transform: uppercase; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-sans); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase; z-index: 1010; }
         
-        .main-nav { 
-            display: flex; flex-direction: column; 
-            position: absolute; top: 60px; right: 0; 
-            width: 100%; background-color: var(--color-dark); color: var(--color-white);
-            border-radius: 0; padding: 2.5rem 1.5rem; gap: 2rem;
-            transform: translateY(-15px); opacity: 0; pointer-events: none;
-            transition: transform 0.5s var(--ease-out-expo), opacity 0.4s ease;
-            z-index: 1000;
-            border-bottom: 4px solid var(--color-dark);
-        }
-        .main-nav.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
-        .main-nav a { font-size: 1.2rem; font-family: var(--font-serif); font-style: italic; }
+        /* Menu Desktop */
+        .nav-links { display: none; gap: var(--space-lg); align-items: center; }
+        .nav-links a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; position: relative; }
+        .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0%; height:1px; background:currentColor; transition:width 0.4s var(--ease-out-expo); }
+        .nav-links a:hover::after { width: 100%; }
 
+        /* Menu Mobile Drawer */
+        .mobile-nav {
+            position: fixed; top: 0; right: 0; width: 100%; height: 100vh;
+            background: var(--color-dark); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: var(--space-lg);
+            transform: translateX(100%); transition: transform 0.6s var(--ease-out-expo);
+            z-index: 999;
+        }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { font-family: var(--font-serif); font-size: 3rem; color: var(--color-white); }
+        
         .menu-toggle {
             display: block; background: none; border: none; cursor: pointer;
-            width: 24px; height: 14px; position: relative; z-index: 1010;
+            width: 30px; height: 20px; position: relative; z-index: 1010; mix-blend-mode: difference; color: var(--color-white);
         }
         .menu-toggle span {
-            display: block; width: 100%; height: 2px; background-color: var(--color-dark);
-            position: absolute; transition: transform 0.3s var(--ease-out-expo), top 0.3s var(--ease-out-expo), bottom 0.3s var(--ease-out-expo);
+            display: block; width: 100%; height: 2px; background-color: currentColor;
+            position: absolute; left: 0; transition: transform 0.4s var(--ease-out-expo), top 0.4s, bottom 0.4s;
         }
         .menu-toggle span:first-child { top: 0; }
         .menu-toggle span:last-child { bottom: 0; }
-        .menu-open .menu-toggle span:first-child { transform: rotate(45deg); top: 6px; }
-        .menu-open .menu-toggle span:last-child { transform: rotate(-45deg); bottom: 6px; }
+        .menu-open .menu-toggle span:first-child { transform: rotate(45deg); top: 9px; }
+        .menu-open .menu-toggle span:last-child { transform: rotate(-45deg); bottom: 9px; }
 
-        .btn-header { display: none; }
+        @media (min-width: 1024px) { 
+            .nav-links { display: flex; } 
+            .menu-toggle { display: none; }
+            .mobile-nav { display: none; }
+        }
 
-        /* =========================================
-           3. HERO SECTION - GLOW TYPOGRAPHY
-        ========================================= */
+        /* ==========================================================================
+           3. HERO (V2 Mantenuta)
+           ========================================================================== */
         .hero { 
-            position: relative; min-height: 100vh; display: flex; flex-direction: column; 
-            justify-content: center; overflow: hidden; background-color: var(--color-stone);
-            padding-top: 100px; padding-bottom: 6rem; border-bottom: 1px solid rgba(0,0,0,0.1);
+            min-height: 100vh; display: flex; align-items: center; 
+            background-color: var(--color-dark); color: var(--color-stone);
+            overflow: hidden; position: relative; padding-top: 80px;
         }
-        
-        .hero-layout { display: flex; flex-direction: column; gap: 4rem; width: 100%; }
-        .micro-label { display: inline-block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em; color: var(--color-dark); margin-bottom: 1rem; opacity: 0; transform: translateY(10px); animation: fadeInUP 1s var(--ease-out-expo) 0.2s forwards; }
-        
-        .hero-left { width: 100%; }
-        .hero-title { width: 100%; position: relative; z-index: 3; }
-        .hero-title span { display: block; opacity: 0; width: 100%; transform: translateY(40px); line-height: 0.9; }
-        
-        .hero-title span:nth-child(1) { 
-            font-family: var(--font-sans); font-size: 15vw; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; animation-delay: 0.1s; text-align: left; 
-            background: linear-gradient(90deg, #0A0A0A, #444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: cinematicReveal 1.4s var(--ease-out-expo) forwards;
+        .hero-layout { 
+            display: grid; grid-template-columns: 1fr; gap: var(--space-lg); 
+            position: relative; z-index: 2; width: 100%;
         }
-        
-        .hero-title span:nth-child(2) { 
-            font-family: var(--font-serif); font-size: 22vw; font-weight: 400; text-align: left; padding-left: 2%; 
-            background: linear-gradient(to right, #B89053, #E3C58B, #a17737, #B89053);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow: 0px 0px 15px rgba(227, 197, 139, 0.4), 0px 0px 35px rgba(184, 144, 83, 0.15);
-            animation: cinematicReveal 1.4s var(--ease-out-expo) forwards, shimmerGlow 8s linear infinite;
-            animation-delay: 0.2s, 1.6s;
-        } 
-        
-        .hero-title span:nth-child(3) { 
-            font-family: var(--font-sans); font-size: 13vw; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; animation-delay: 0.3s; text-align: left; 
-            color: var(--color-dark);
-            animation: cinematicReveal 1.4s var(--ease-out-expo) forwards;
-        }
-        
-        @keyframes cinematicReveal { to { opacity: 1; transform: translateY(0); } }
-        @keyframes shimmerGlow { to { background-position: 200% center; } }
-        
-        .hero-title em { font-style: italic; }
-        
-        .hero-right { opacity: 0; transform: translateY(30px); animation: fadeInUP 1.2s var(--ease-out-expo) 0.6s forwards; display: flex; flex-direction: column; gap: 2rem; align-items: flex-start; z-index: 3; position: relative; width: 100%; padding-left: 8%; }
-        @keyframes fadeInUP { to { opacity: 1; transform: translateY(0); } }
-        .hero-desc { font-weight: 400; font-size: 1.15rem; line-height: 1.5; color: #222; }
-        
-        .js-parallax { will-change: transform; }
+        @media (min-width: 1024px) { .hero-layout { grid-template-columns: 1.2fr 0.8fr; align-items: center; } }
 
-        /* =========================================
-           4. LA FONDAZIONE - GRIGLIA SOBRIA (OTTIMIZZATA MOBILE)
-        ========================================= */
-        .editorial-grid { 
-            display: flex; 
-            flex-direction: row;
-            gap: 1rem;
-            margin-top: 3rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 2rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            width: 100%;
+        .hero-title { display: flex; flex-direction: column; }
+        .hero-title .line { overflow: hidden; display: block; }
+        .hero-title .line span { 
+            display: block; font-size: clamp(3.5rem, 8vw, 9rem); line-height: 0.9;
+            font-family: var(--font-serif); font-weight: 400; 
+            transform: translateY(110%); opacity: 0;
         }
+        .hero-title .line:nth-child(2) span { font-family: var(--font-sans); font-weight: 200; font-size: clamp(2.5rem, 6vw, 7rem); letter-spacing: -0.04em; }
         
-        .editorial-grid::-webkit-scrollbar { display: none; }
-        
-        .service-card { 
-            background-color: #121212; /* Nero sobrio ed elegante */
-            color: var(--color-white);
-            padding: 2.5rem 1.8rem;
-            border-radius: 2px; /* Angoli netti brutalisti */
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            box-shadow: none; /* Rimosse ombre pesanti per massima sobrietà */
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: transform 0.4s var(--ease-out-expo), background-color 0.4s ease;
-            width: 85vw;
-            min-width: 85vw;
-            max-width: 85vw; /* Impedisce al testo di allargare la card */
-            flex-shrink: 0;
-            scroll-snap-align: start;
-        }
-        
-        .service-card:hover { transform: translateY(-3px); background-color: #161616; }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding-bottom: 1.2rem;
+        .hero-subtitle { 
+            margin-top: var(--space-md); font-size: clamp(1rem, 1.2vw, 1.25rem); 
+            color: rgba(255,255,255,0.7); max-width: 500px; font-weight: 300;
+            opacity: 0; transform: translateY(20px);
         }
 
-        .card-number { font-family: var(--font-serif); font-style: italic; font-size: 3rem; line-height: 1; color: var(--color-accent); }
-        .card-label { font-family: var(--font-sans); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); }
+        /* 3D Abstract Glassmorphism UI (CSS Only) */
+        .hero-visual { 
+            position: relative; height: 50vh; width: 100%; perspective: 1200px; 
+            display: none; justify-content: center; align-items: center;
+        }
+        @media (min-width: 1024px) { .hero-visual { display: flex; } }
 
-        /* Controllo totale dell'interruzione testo per evitare overflow orizzontale */
-        .service-card h3 { 
-            font-size: 1.6rem; 
-            font-family: var(--font-serif); 
-            font-weight: 400; 
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-            color: var(--color-white);
-            overflow-wrap: break-word;
-            word-wrap: break-word;
+        .ui-system {
+            position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+            animation: floatUI 12s ease-in-out infinite;
         }
         
-        .service-card p { 
-            font-size: 0.95rem; 
-            line-height: 1.5; 
-            color: rgba(255,255,255,0.55); 
-            overflow-wrap: break-word;
-        }
+        .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4; animation: orbit 25s linear infinite; }
+        .orb-1 { width: 300px; height: 300px; background: var(--color-accent); top: 10%; left: 10%; }
+        .orb-2 { width: 400px; height: 400px; background: #3c445c; bottom: 10%; right: 10%; animation-direction: reverse; }
 
-        .js-reveal { opacity: 0; transform: translateY(30px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
+        .glass-panel {
+            position: absolute; border-radius: 16px; background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; gap: 12px; padding: 24px;
+        }
+        .pane-main { width: 340px; height: 420px; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateY(-15deg) rotateX(10deg) translateZ(40px); }
+        .pane-float { width: 220px; height: 140px; top: 25%; right: 5%; transform: rotateY(-10deg) rotateX(20deg) translateZ(100px); background: rgba(195, 159, 97, 0.08); border-color: rgba(195, 159, 97, 0.3); }
+        .mock-line { height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; width: 100%; margin-bottom: 8px; }
+        .mock-line.short { width: 60%; }
+        .mock-line.accent { background: var(--color-accent); width: 40%; }
+        
+        @keyframes floatUI { 0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); } 50% { transform: translateY(-15px) rotateX(2deg) rotateY(-2deg); } }
+        @keyframes orbit { 100% { transform: rotate(360deg); } }
+
+        /* ==========================================================================
+           4. METRICHE (V2 Mantenuta)
+           ========================================================================== */
+        .metrics-section { 
+            background: var(--color-dark); color: var(--color-white); 
+            padding: var(--space-md) 0 var(--space-section) 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .metrics-grid { 
+            display: grid; grid-template-columns: 1fr; gap: var(--space-lg);
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-lg);
+        }
+        @media (min-width: 768px) { .metrics-grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .metric-item { display: flex; flex-direction: column; }
+        .metric-num { font-family: var(--font-sans); font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; color: var(--color-accent); line-height: 1; margin-bottom: 0.5rem; }
+        .metric-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); font-weight: 600; }
+
+        /* ==========================================================================
+           5. METODOLOGIA (Semplificata e Chiara)
+           ========================================================================== */
+        .services-section { background: var(--color-stone); }
+        .services-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); }
+        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .service-card {
+            background: var(--color-white); padding: var(--space-md); border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05);
+            display: flex; flex-direction: column;
+        }
+        .card-number { font-family: var(--font-serif); font-size: 2.5rem; color: var(--color-accent); line-height: 1; margin-bottom: var(--space-sm); }
+        .service-card h3 { font-family: var(--font-sans); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .service-card p { font-size: 1rem; color: #555; line-height: 1.6; }
+
+        /* ==========================================================================
+           6. CASI STUDIO (Portfolio Compattato)
+           ========================================================================== */
+        .cases-section { background: var(--color-dark-alt); color: var(--color-white); }
+        
+        .case-slide { display: none; grid-template-columns: 1fr; gap: var(--space-md); animation: fadeIn 0.6s var(--ease-out-expo) forwards; }
+        .case-slide.active { display: grid; }
+        @media (min-width: 1024px) { .case-slide { grid-template-columns: 1fr 1fr; align-items: center; } }
+        
+        /* Altezza ridotta per non occupare tutto lo schermo */
+        .case-visual { width: 100%; aspect-ratio: 16/9; max-height: 450px; overflow: hidden; border-radius: 8px; position: relative; }
+        .case-visual img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); transition: transform 0.8s ease; }
+        .case-visual:hover img { transform: scale(1.03); }
+        
+        .case-info { display: flex; flex-direction: column; justify-content: center; }
+        .case-client { font-family: var(--font-serif); font-size: clamp(2rem, 3vw, 4rem); line-height: 1; margin-bottom: var(--space-xs); margin-top: 0.5rem; }
+        
+        .case-data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-sm); margin-top: var(--space-md); }
+        .data-box h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 0.2rem; }
+        .data-box p { font-size: 0.95rem; font-weight: 300; }
+        .data-box .highlight { color: var(--color-accent); font-weight: 600; font-size: 1.1rem; }
+
+        .slider-nav { display: flex; gap: 1rem; margin-top: var(--space-lg); }
+        .slider-btn { 
+            width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); 
+            background: transparent; color: white; display: flex; justify-content: center; align-items: center;
+            transition: all 0.3s ease;
+        }
+        .slider-btn:hover { background: var(--color-white); color: var(--color-dark); }
+
+        /* ==========================================================================
+           7. CONTATTI (Form Funzionale con Design Premium)
+           ========================================================================== */
+        .contact-section { background: var(--color-stone); }
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
+        @media (min-width: 1024px) { .contact-grid { grid-template-columns: 1fr 1.5fr; } }
+
+        .contact-info h2 { font-size: clamp(2.5rem, 4vw, 4rem); margin-bottom: var(--space-sm); }
+        .contact-email { font-family: var(--font-sans); font-size: 1.5rem; font-weight: 600; color: var(--color-dark); border-bottom: 2px solid var(--color-accent); padding-bottom: 0.1rem; display: inline-block; margin-bottom: var(--space-lg); }
+        
+        .contact-form { display: flex; flex-direction: column; gap: var(--space-md); background: var(--color-white); padding: var(--space-lg); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .input-group { position: relative; display: flex; flex-direction: column; }
+        .input-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: #555; margin-bottom: 0.5rem; }
+        
+        .premium-input {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid #ddd;
+            padding: 0.5rem 0; font-family: var(--font-sans); font-size: 1.1rem; color: var(--color-dark);
+            transition: border-color 0.3s ease; border-radius: 0;
+        }
+        .premium-input:focus { outline: none; border-bottom-color: var(--color-accent); }
+        
+        .form-message { display: none; margin-top: 1rem; padding: 1rem; font-size: 0.9rem; border-left: 3px solid var(--color-accent); background: rgba(195, 159, 97, 0.1); }
+
+        /* ANIMATION REVEALS */
+        .js-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
         .js-reveal.is-revealed { opacity: 1; transform: translateY(0); }
 
-        /* =========================================
-           5. CHI SIAMO
-        ========================================= */
-        #chi-siamo { border-top: 1px solid rgba(0,0,0,0.1); padding-top: 6rem;} 
-        .split-section { display: flex; flex-direction: column; gap: 3rem; position: relative; }
-        
-        .wow-heading { perspective: 1200px; margin-bottom: 0; }
-        .wow-heading .mask { display: inline-block; overflow: visible; padding-bottom: 0.1em; margin-bottom: -0.1em; }
-        .wow-heading .text {
-            display: inline-block;
-            transform: translateY(180%) translateZ(-400px) rotateX(70deg) rotateY(15deg) scale(0.6);
-            filter: blur(25px); opacity: 0; transform-origin: bottom center;
-            transition: transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), filter 2.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease;
-        }
-        .js-wow-reveal.is-revealed .wow-heading .text {
-            transform: translateY(0) translateZ(0) rotateX(0) rotateY(0) scale(1);
-            filter: blur(0); opacity: 1;
-        }
-        .js-wow-reveal.is-revealed .mask:nth-of-type(1) .text { transition-delay: 0.1s; }
-        .js-wow-reveal.is-revealed .mask:nth-of-type(2) .text { transition-delay: 0.4s; }
-        
-        @keyframes textGlowImpact {
-            0% { text-shadow: 0 0 0 rgba(0,0,0,0); }
-            30% { text-shadow: 0 0 30px rgba(0,0,0,0.15); }
-            100% { text-shadow: 0 0 0 rgba(0,0,0,0); }
-        }
-        .js-wow-reveal.is-revealed .mask:nth-of-type(2) .text { animation: textGlowImpact 2s ease 1.1s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .split-right { padding-left: 8%; position: relative;}
-        .split-right p.lead { font-family: var(--font-sans); font-size: 1.3rem; color: var(--color-dark); margin-bottom: 1.5rem; line-height: 1.4; font-weight: 500;}
-
-        /* =========================================
-           6. ARCHIVIO SLIDER
-        ========================================= */
-        .js-slider-section { position: relative; transition: background-color 1.2s cubic-bezier(0.16, 1, 0.3, 1); padding: 4rem 0; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.1); }
-        .slider-main-wrapper { position: relative; width: 100%; margin-top: 2rem; height: 380px; } 
-        .slider-container { position: relative; width: 100%; height: 100%; }
-        
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; pointer-events: none; visibility: hidden; z-index: 1; }
-        .slide.active { opacity: 1; pointer-events: auto; visibility: visible; z-index: 2; }
-        
-        .slide-text-mask { overflow: hidden; display: block; margin-bottom: 0.2rem; }
-        .slide-cat { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); transform: translateY(100%); transition: transform 0.6s var(--ease-out-expo); }
-        .slide-title { font-family: var(--font-serif); font-size: 2.8rem; line-height: 1; color: var(--color-white); transform: translateY(100%); transition: transform 0.8s var(--ease-out-expo); }
-        .slide-link { display: inline-block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 0.2rem; transform: translateY(100%); transition: transform 0.9s var(--ease-out-expo); margin-top: 0.5rem;}
-
-        .slide.active .slide-cat { transform: translateY(0); transition-delay: 0.1s; }
-        .slide.active .slide-title { transform: translateY(0); transition-delay: 0.2s; }
-        .slide.active .slide-link { transform: translateY(0); transition-delay: 0.3s; }
-
-        .slide-image-wrapper { position: relative; width: 100%; aspect-ratio: 4/3; overflow: hidden; clip-path: inset(0 0 100% 0); transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1); will-change: clip-path; }
-        .slide.active .slide-image-wrapper { clip-path: inset(0 0 0 0); }
-        .slide-image-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.1); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-
-        .slider-controls { display: flex; justify-content: flex-start; gap: 0.5rem; position: absolute; bottom: -45px; left: 0; z-index: 10; width: 100%; }
-        .nav-arrow { width: 45px; height: 45px; background-color: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: var(--color-white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
-        
-        /* =========================================
-           7. CONTATTI E FORM EDITORIALE (ANIMAZIONE INIZIA LA DISCUSSIONE POTENZIATA)
-        ========================================= */
-        #contatti { background-color: var(--color-stone); padding-top: 6rem; }
-        .contact-header { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 4rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 3rem;}
-        .contact-header h2 { font-size: 3.8rem; line-height: 0.95; margin-bottom: 0; }
-        .contact-header p { padding-left: 8%; }
-
-        /* Rimozione vecchie impostazioni base reveal per l'header */
-        .contact-header.js-reveal { opacity: 1; transform: none; transition: none; }
-        
-        /* Nuova Animazione Cinematica "Awwwards High Premium" (Mask + 3D Skew + Blur + Scale) */
-        .reveal-mask { 
-            display: block; 
-            overflow: hidden; 
-            padding-bottom: 0.15em; 
-            margin-bottom: -0.15em; 
-            clip-path: inset(0 0 100% 0);
-            transition: clip-path 1.6s var(--ease-out-expo);
-        }
-        .reveal-line { 
-            display: block; 
-            transform: translateY(105%) scaleY(1.4) skewY(8deg); 
-            transform-origin: left bottom;
-            opacity: 0;
-            filter: blur(15px);
-            transition: transform 1.8s var(--ease-out-expo), opacity 1.4s ease, filter 1.2s ease; 
-            will-change: transform, opacity, filter;
-        }
-        
-        /* Attivazione scaglionata (Stagger) dell'effetto spettacolare */
-        .contact-header.is-revealed .reveal-mask:nth-of-type(1) { clip-path: inset(0 0 0 0); }
-        .contact-header.is-revealed .reveal-mask:nth-of-type(1) .reveal-line { 
-            transform: translateY(0) scaleY(1) skewY(0); opacity: 1; filter: blur(0); transition-delay: 0.05s; 
-        }
-        
-        .contact-header.is-revealed .reveal-mask:nth-of-type(2) { clip-path: inset(0 0 0 0); transition-delay: 0.15s; }
-        .contact-header.is-revealed .reveal-mask:nth-of-type(2) .reveal-line { 
-            transform: translateY(0) scaleY(1) skewY(0); opacity: 1; filter: blur(0); transition-delay: 0.15s; 
-        }
-        
-        /* Animazione fluida di espansione e tracking del Paragrafo */
-        .awwwards-desc {
-            opacity: 0;
-            transform: translateY(35px) scale(0.97);
-            filter: blur(8px);
-            letter-spacing: 0.05em;
-            transition: opacity 1.5s ease, transform 1.8s var(--ease-out-expo), filter 1.2s ease, letter-spacing 1.8s var(--ease-out-expo);
-            will-change: transform, opacity, filter;
-        }
-        .contact-header.is-revealed .awwwards-desc {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-            letter-spacing: normal;
-            transition-delay: 0.45s;
-        }
-
-        /* Resto Contatti */
-        .contact-grid { display: flex; flex-direction: column; gap: 4rem; }
-        .contact-info-blocks { display: flex; flex-direction: column; gap: 2.5rem; padding-left: 8%; }
-        .info-block h4 { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.4); margin-bottom: 0.5rem; }
-        .contact-email { font-family: var(--font-sans); font-size: 1.5rem; font-weight: 500; display: inline-block; color: var(--color-dark); border-bottom: 2px solid var(--color-dark); padding-bottom: 0.1em;}
-        
-        .contact-form-wrapper { padding-left: 8%; }
-        .contact-form { display: flex; flex-direction: column; gap: 0.5rem; }
-        .input-line { position: relative; }
-        .premium-input {
-            width: 100%; background: transparent; border: none;
-            border-bottom: 1px solid rgba(0,0,0,0.2);
-            padding: 1.2rem 0; font-family: var(--font-serif);
-            font-size: 1.8rem; color: var(--color-dark);
-            transition: border-color 0.4s ease;
-            border-radius: 0;
-        }
-        .premium-input::placeholder { color: rgba(0,0,0,0.25); }
-        .premium-input:focus { outline: none; border-bottom-color: var(--color-dark); }
-        
-        .btn-submit { 
-            width: 100%; margin-top: 2rem; background-color: transparent; color: var(--color-dark); 
-            padding: 1.5rem; font-family: var(--font-sans); font-weight: 600; font-size: 0.85rem; 
-            border: 1px solid var(--color-dark); cursor: pointer; transition: all 0.4s var(--ease-out-expo); 
-            text-transform: uppercase; letter-spacing: 0.05em; border-radius: 0;
-        }
-
-        /* FOOTER BASE */
-        .site-footer { padding: 4rem 0 2rem 0; background-color: var(--theme-1); border-top: 1px solid rgba(255,255,255,0.1); }
-        .footer-top { display: flex; flex-direction: column; gap: 3rem; margin-bottom: 4rem; }
-        .footer-brand h2 { font-size: 2rem; font-family: var(--font-sans); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-        .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .link-col h4 { font-family: var(--font-sans); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; }
-        .link-col a { display: block; margin-bottom: 0.8rem; font-size: 1rem; font-family: var(--font-serif); font-style: italic; color: rgba(255,255,255,0.7); }
-        .footer-bottom { display: flex; flex-direction: column; gap: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.3); }
-
-        /* =========================================
-           8. CONFIGURAZIONE AGGIUNTIVA DESKTOP
-        ========================================= */
-        @media (min-width: 768px) {
-            .container { padding: 0 4rem; }
-            .section { padding: 10rem 0; }
-            
-            .btn-outline { width: auto; }
-
-            /* Ripristino struttura regolare griglia desktop */
-            .editorial-grid { flex-direction: row; gap: 2rem; overflow-x: visible; padding-bottom: 0; }
-            .service-card { flex: 1; padding: 3rem; min-width: 0; max-width: none; width: auto; scroll-snap-align: none; background-color: var(--color-dark); border-radius: 4px; }
-            .service-card h3 { font-size: 2rem; }
-            .service-card p { font-size: 1.05rem; }
-            
-            #chi-siamo { padding-top: 10rem; }
-            .split-right { padding-left: 0; }
-            .contact-header { flex-direction: row; justify-content: space-between; align-items: flex-end; }
-            .contact-header p { padding-left: 0; }
-            .contact-grid { grid-template-columns: 1fr 2fr; display: grid; gap: 8rem; align-items: start; }
-            .contact-info-blocks { padding-left: 0; }
-            .contact-form-wrapper { padding-left: 0; }
-            .contact-email { font-size: clamp(1.5rem, 3vw, 2.5rem); }
-            .premium-input { font-size: clamp(2rem, 4vw, 3rem); }
-            .btn-submit { width: auto; padding: 2rem; font-size: 1rem; }
-            .footer-top { grid-template-columns: 1fr 1fr; display: grid; }
-            .footer-bottom { flex-direction: row; justify-content: space-between; }
-        }
-
-        @media (min-width: 1024px) {
-            .menu-toggle { display: none; }
-            .main-nav { display: flex; flex-direction: row; position: static; width: auto; background: transparent; padding: 0; gap: 4rem; opacity: 1; pointer-events: auto; }
-            .main-nav a { font-size: 0.9rem; font-family: var(--font-sans); font-style: normal; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-dark); }
-            .btn-header { display: inline-flex; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 0.8rem 1.5rem; border: 1px solid var(--color-dark); transition: all 0.3s ease; }
-            .btn-header:hover { background-color: var(--color-dark); color: var(--color-white); }
-            
-            .hero { padding-top: 0; }
-            .hero-layout { grid-template-columns: 50% 50%; display: grid; align-items: center; gap: 4rem; padding-top: 80px;}
-            
-            .hero-title span:nth-child(1), .hero-title span:nth-child(3) { font-size: clamp(3rem, 7vw, 8rem); }
-            .hero-title span:nth-child(2) { font-size: clamp(4rem, 11vw, 12rem); padding-left: 10%; }
-            
-            .hero-right { padding-left: 0; transform: translateY(80px); }
-            
-            .split-section { grid-template-columns: 1fr 1fr; display: grid; gap: 8rem; align-items: start; }
-            
-            .js-slider-section { padding: 6rem 0; } 
-            .slider-main-wrapper { height: 480px; margin-top: 3rem; } 
-            .slide { flex-direction: row; align-items: center; gap: 8rem; }
-            .slide-image-wrapper { flex: 1.3; height: 100%; aspect-ratio: auto; }
-            .slide-content { flex: 0.7; }
-            .slide-title { font-size: clamp(3rem, 7vw, 6rem); }
-            
-            .slider-controls { 
-                top: 50%; bottom: auto; left: -4rem; right: -4rem; 
-                width: calc(100% + 8rem); transform: translateY(-50%); 
-                justify-content: space-between; pointer-events: none; padding: 0; z-index: 20;
-            }
-            .nav-arrow { pointer-events: auto; width: 80px; height: 80px; }
-        }
     </style>
 </head>
 <body>
 
+    <div class="noise-overlay"></div>
+    
     <header class="site-header js-header">
         <div class="container header-inner">
-            <a href="#home" class="logo">Studiocodice.</a>
-            <nav class="main-nav js-nav">
-                <a href="#servizi">Il Metodo</a>
-                <a href="#chi-siamo">Lo Studio</a>
-                <a href="#portfolio">Archivio</a>
+            <a href="#" class="logo">Studiocodice.</a>
+            
+            <nav class="nav-links">
+                <a href="#metodo">Il Metodo</a>
+                <a href="#casi-studio">Casi Studio</a>
+                <a href="#contatti">Contatti</a>
+                <a href="#contatti" class="btn-premium" style="margin-left: 1rem;"><span>Avvia Progetto</span></a>
             </nav>
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
-                <a href="#contatti" class="btn-header">Avvia Progetto</a>
-                <button class="menu-toggle js-menu-toggle" aria-label="Apri menu">
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+
+            <button class="menu-toggle js-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
+    <nav class="mobile-nav js-mobile-nav">
+        <a href="#metodo" class="js-mobile-link">Il Metodo</a>
+        <a href="#casi-studio" class="js-mobile-link">Casi Studio</a>
+        <a href="#contatti" class="js-mobile-link">Contatti</a>
+    </nav>
+
     <main>
-        <section id="home" class="hero bg-grid">
-            <div class="container hero-layout js-parallax" data-speed="0.1">
-                <div class="hero-left">
-                    <span class="micro-label">Web Architecture</span>
-                    <h1 class="hero-title">
-                        <span>Sviluppo</span>
-                        <span><em>Sartoriale</em></span>
-                        <span>Senza limiti.</span>
-                    </h1>
+        <section class="hero dark-mode">
+            <div class="container hero-layout">
+                <div class="hero-title js-hero-anim">
+                    <span class="line"><span>Ingegneria</span></span>
+                    <span class="line"><span>del Valore.</span></span>
+                    <p class="hero-subtitle">Non creiamo semplici siti web. Sviluppiamo asset digitali proprietari ad alte prestazioni per brand che esigono il dominio del proprio mercato.</p>
                 </div>
-                <div class="hero-right">
-                    <p class="hero-desc">Siti web scolpiti nel codice puro. Rifiutiamo i template. Rifiutiamo gli abbonamenti. Costruiamo asset digitali definitivi per brand che non accettano compromessi.</p>
-                    <a href="#contatti" class="btn-outline">Esplora il metodo</a>
+                
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="ui-system">
+                        <div class="orb orb-1"></div>
+                        <div class="orb orb-2"></div>
+                        
+                        <div class="glass-panel pane-main">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1);"></div>
+                                <div style="display: flex; gap: 8px;">
+                                    <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--color-accent);"></div>
+                                    <div style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
+                                </div>
+                            </div>
+                            <div class="mock-line"></div>
+                            <div class="mock-line short"></div>
+                            <div class="mock-line accent" style="margin-top: auto;"></div>
+                            
+                            <div style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 12px; margin-top: 16px; height: 80px; display:flex; align-items:flex-end;">
+                                <div style="width: 100%; display: flex; align-items: flex-end; gap: 8px; height: 100%;">
+                                    <div style="width: 20%; background: rgba(255,255,255,0.1); height: 40%; border-radius: 4px;"></div>
+                                    <div style="width: 20%; background: rgba(255,255,255,0.2); height: 70%; border-radius: 4px;"></div>
+                                    <div style="width: 20%; background: var(--color-accent); height: 100%; border-radius: 4px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel pane-float">
+                            <div style="font-family: var(--font-sans); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Performance Score</div>
+                            <div style="font-family: var(--font-serif); font-size: 3rem; line-height: 1; color: var(--color-white); margin-top: 4px;">100<span style="color:var(--color-accent)">%</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="servizi" class="section bg-stone bg-grid">
+        <section class="metrics-section dark-mode">
             <div class="container">
-                <h2 class="js-reveal">La fondazione.</h2>
-                
-                <div class="editorial-grid js-reveal">
-                    <div class="service-card">
-                        <div class="card-header">
-                            <span class="card-number">01</span>
-                            <span class="card-label">Ingegneria</span>
-                        </div>
-                        <h3>Performance Assolute</h3>
-                        <p>Sviluppo nativo senza dipendenze. Caricamenti istantanei e struttura inattaccabile per i motori di ricerca.</p>
+                <div class="metrics-grid js-reveal">
+                    <div class="metric-item">
+                        <span class="metric-num">>50M</span>
+                        <span class="metric-label">Revenue generata per i clienti</span>
                     </div>
-                    <div class="service-card">
-                        <div class="card-header">
-                            <span class="card-number">02</span>
-                            <span class="card-label">Infrastruttura</span>
-                        </div>
-                        <h3>Sicurezza Headless</h3>
-                        <p>Assenza totale di database esposti. Nessun aggiornamento necessario, nessuna vulnerabilità architetturale.</p>
+                    <div class="metric-item">
+                        <span class="metric-num">0.0s</span>
+                        <span class="metric-label">Latenza percepita (Headless)</span>
                     </div>
-                    <div class="service-card">
-                        <div class="card-header">
-                            <span class="card-number">03</span>
-                            <span class="card-label">Design System</span>
-                        </div>
-                        <h3>Estetica Funzionale</h3>
-                        <p>Griglie tipografiche rigorose e interfacce essenziali. Il design è asservito esclusivamente all'obiettivo business.</p>
+                    <div class="metric-item">
+                        <span class="metric-num">100%</span>
+                        <span class="metric-label">Codice sorgente proprietario</span>
                     </div>
-                </div>
-                
-            </div>
-        </section>
-
-        <section id="chi-siamo" class="section bg-stone">
-            <div class="container split-section">
-                
-                <div class="split-left js-wow-reveal">
-                    <h2 class="wow-heading">
-                        <span class="mask"><span class="text">Artigianato</span></span><br>
-                        <span class="mask"><span class="text"><em class="italic-accent">digitale.</em></span></span>
-                    </h2>
-                </div>
-                
-                <div class="split-right js-reveal">
-                    <p class="lead">Restituiamo la proprietà e il controllo tecnologico alle aziende.</p>
-                    <p>Il mercato è saturo di soluzioni in affitto. Noi consegniamo codice sorgente proprietario. Nessun vincolo, nessuna obsolescenza programmata: solo ingegneria web concepita per durare e scalare.</p>
                 </div>
             </div>
         </section>
 
-        <section id="portfolio" class="section text-white js-slider-section" style="background-color: var(--theme-1);">
+        <section id="metodo" class="section services-section">
             <div class="container">
-                <h2 class="js-reveal" style="color:var(--color-white)">Opere <em class="italic-accent">selezionate.</em></h2>
-                <div class="slider-main-wrapper js-reveal">
-                    <div class="slider-container">
-                        
-                        <div class="slide active" data-theme="var(--theme-1)">
-                            <div class="slide-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="Atelier Forma" width="1000" height="750">
-                            </div>
-                            <div class="slide-content">
-                                <span class="slide-text-mask"><div class="slide-cat">Corporate & Interior</div></span>
-                                <span class="slide-text-mask"><h3 class="slide-title">Atelier Forma</h3></span>
-                                <span class="slide-text-mask"><a href="#" class="slide-link">Analisi Progetto</a></span>
-                            </div>
-                        </div>
-                        
-                        <div class="slide" data-theme="var(--theme-2)">
-                            <div class="slide-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1541888081622-0d1dc903fb24?q=80&w=1000&auto=format&fit=crop" alt="Tenuta San Rocco" width="1000" height="750">
-                            </div>
-                            <div class="slide-content">
-                                <span class="slide-text-mask"><div class="slide-cat">Hospitality Platform</div></span>
-                                <span class="slide-text-mask"><h3 class="slide-title">Tenuta San Rocco</h3></span>
-                                <span class="slide-text-mask"><a href="#" class="slide-link">Analisi Progetto</a></span>
-                            </div>
-                        </div>
-                        
-                        <div class="slide" data-theme="var(--theme-3)">
-                            <div class="slide-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Nexus Tech" width="1000" height="750">
-                            </div>
-                            <div class="slide-content">
-                                <span class="slide-text-mask"><div class="slide-cat">SaaS & Finanza</div></span>
-                                <span class="slide-text-mask"><h3 class="slide-title">Nexus Tech</h3></span>
-                                <span class="slide-text-mask"><a href="#" class="slide-link">Analisi Progetto</a></span>
-                            </div>
-                        </div>
-                        
+                <h2 class="js-reveal">Il nostro <span class="italic-accent">metodo.</span></h2>
+                
+                <div class="services-grid js-reveal">
+                    <div class="service-card">
+                        <div class="card-number">01</div>
+                        <h3>Architettura Headless</h3>
+                        <p>Separiamo il frontend dal backend. Il risultato è un sistema con sicurezza impenetrabile, nessun database esposto e tempi di caricamento istantanei indipendentemente dal traffico.</p>
                     </div>
-                    <div class="slider-controls">
-                        <button class="nav-arrow js-prev" aria-label="Precedente">
-                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                        </button>
-                        <button class="nav-arrow js-next" aria-label="Successivo">
-                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.5" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                        </button>
+                    <div class="service-card">
+                        <div class="card-number">02</div>
+                        <h3>Design Funzionale</h3>
+                        <p>L'estetica è asservita all'obiettivo aziendale. Progettiamo interfacce in cui ogni elemento è posizionato strategicamente per eliminare l'attrito e guidare l'utente verso la conversione.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-number">03</div>
+                        <h3>Indipendenza Totale</h3>
+                        <p>Rifiutiamo i vincoli degli abbonamenti e dei template. Consegniamo il codice sorgente nativo: un vero asset tecnologico di proprietà dell'azienda che non si deprezza mai.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contatti" class="bg-stone">
+        <section id="casi-studio" class="section cases-section dark-mode">
             <div class="container">
-                <!-- HTML Potenziato con Struttura ad Impatto Awwwards -->
-                <div class="contact-header js-reveal">
-                    <h2>
-                        <span class="reveal-mask"><span class="reveal-line">Inizia la</span></span>
-                        <span class="reveal-mask"><span class="reveal-line"><em>discussione.</em></span></span>
-                    </h2>
-                    <p class="awwwards-desc" style="max-width: 300px;">Nessun intermediario. Parlerai direttamente con l'architetto del software.</p>
-                </div>
+                <h2 class="js-reveal">Casi <span class="italic-accent">studio.</span></h2>
                 
-                <div class="contact-grid">
-                    <div class="contact-info-blocks js-reveal">
-                        <div class="info-block">
-                            <h4>Direct Line</h4>
-                            <a href="mailto:hello@studiocodice.it" class="contact-email">hello@studiocodice.it</a>
+                <div class="js-reveal">
+                    <div class="case-slide active">
+                        <div class="case-visual">
+                            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&auto=format&fit=crop" alt="Piattaforma Real Estate Luxury" loading="lazy">
                         </div>
-                        <div class="info-block" style="margin-top: 2rem;">
-                            <h4>Studio</h4>
-                            <p>Via Tortona 14<br>20144, Milano (MI) — Italia</p>
+                        <div class="case-info">
+                            <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--color-accent); font-weight: 600;">Real Estate Platform</span>
+                            <h3 class="case-client">Aura Properties</h3>
+                            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.6;">Riprogettazione completa dell'infrastruttura web per gestire un catalogo immobiliare da oltre €200M senza alcuna latenza di ricerca.</p>
+                            
+                            <div class="case-data-grid">
+                                <div class="data-box">
+                                    <h4>Problema</h4>
+                                    <p>Query lente (4.2s) e bounce rate alto.</p>
+                                </div>
+                                <div class="data-box">
+                                    <h4>Risultato</h4>
+                                    <p class="highlight">+315% Lead Qualificati</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="case-slide">
+                        <div class="case-visual">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop" alt="Dashboard SaaS Finanziaria" loading="lazy">
+                        </div>
+                        <div class="case-info">
+                            <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--color-accent); font-weight: 600;">Fintech SaaS</span>
+                            <h3 class="case-client">Nexus Capital</h3>
+                            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.6;">Sviluppo di un ecosistema frontend ultra-sicuro per la visualizzazione di dati finanziari in tempo reale per investitori istituzionali.</p>
+                            
+                            <div class="case-data-grid">
+                                <div class="data-box">
+                                    <h4>Problema</h4>
+                                    <p>Renderizzazione lenta dei grafici.</p>
+                                </div>
+                                <div class="data-box">
+                                    <h4>Risultato</h4>
+                                    <p class="highlight">Latenza abbattuta a 0.4s</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-nav js-reveal">
+                    <button class="slider-btn js-prev-case" aria-label="Progetto Precedente">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button class="slider-btn js-next-case" aria-label="Progetto Successivo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contatti" class="section contact-section">
+            <div class="container contact-grid js-reveal">
+                
+                <div class="contact-info">
+                    <h2>Inizia una<br><span class="italic-accent">discussione.</span></h2>
+                    <p style="margin-bottom: 2rem; color: #555; max-width: 400px;">Nessun intermediario, nessun commerciale. Parlerai direttamente con l'architetto del software per analizzare la fattibilità del tuo progetto.</p>
                     
-                    <div class="contact-form-wrapper js-reveal">
-                        <form class="contact-form">
-                            <div class="input-line">
-                                <input type="text" class="premium-input" placeholder="Il tuo nome / Azienda *" required>
-                            </div>
-                            <div class="input-line">
-                                <input type="email" class="premium-input" placeholder="Indirizzo email *" required>
-                            </div>
-                            <div class="input-line">
-                                <textarea rows="1" class="premium-input" placeholder="Dettagli del progetto *" required style="resize:none; overflow:hidden;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
-                            </div>
-                            <button type="submit" class="btn-submit">Invia Richiesta</button>
-                        </form>
+                    <a href="mailto:hello@studiocodice.it" class="contact-email">hello@studiocodice.it</a>
+                    
+                    <div>
+                        <p style="font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; color: #777;">Sede Operativa</p>
+                        <p>Via Tortona 14<br>20144, Milano (MI)</p>
                     </div>
                 </div>
+                
+                <div>
+                    <form class="contact-form js-form" action="#" method="POST">
+                        <div class="input-group">
+                            <label for="name" class="input-label">Nome e Azienda *</label>
+                            <input type="text" id="name" name="name" class="premium-input" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="email" class="input-label">Email Professionale *</label>
+                            <input type="email" id="email" name="email" class="premium-input" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="details" class="input-label">Dettagli del Progetto *</label>
+                            <textarea id="details" name="details" rows="3" class="premium-input" style="resize: vertical;" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-premium btn-submit" style="margin-top: 1rem; width: 100%;">
+                            <span>Invia Richiesta</span>
+                        </button>
+                        
+                        <div class="form-message" id="status-feedback"></div>
+                    </form>
+                </div>
+
             </div>
-            <div style="height: 6rem;"></div>
         </section>
+
     </main>
 
-    <footer class="site-footer text-white js-footer-bg" style="background-color: var(--theme-1);">
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <h2>Studiocodice.</h2>
-                    <p style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">Independent Web Architecture</p>
-                </div>
-                <div class="footer-links">
-                    <div class="link-col">
-                        <h4>Social</h4>
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Instagram</a>
-                        <a href="#">Awwwards</a>
-                    </div>
-                    <div class="link-col">
-                        <h4>Legale</h4>
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Termini</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Studiocodice.</p>
-                <p>P.IVA 12345678901</p>
-            </div>
-        </div>
+    <footer style="background: var(--color-dark); color: white; padding: var(--space-md) 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+        <p style="font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5);">&copy; 2026 Studiocodice. Architecture for the web.</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('.js-header');
-            const parallaxElements = document.querySelectorAll('.js-parallax');
+            
+            /* --- 1. Gestione Menu Mobile (Ripristinato) --- */
+            const menuToggle = document.querySelector('.js-menu-toggle');
+            const mobileNav = document.querySelector('.js-mobile-nav');
+            const mobileLinks = document.querySelectorAll('.js-mobile-link');
+            
+            if (menuToggle && mobileNav) {
+                menuToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('menu-open');
+                    mobileNav.classList.toggle('active');
+                    // Blocca lo scroll del body quando il menu è aperto
+                    document.body.style.overflow = document.body.classList.contains('menu-open') ? 'hidden' : '';
+                });
 
-            window.addEventListener('scroll', () => {
-                let scrollY = window.scrollY;
-                if (scrollY > 50) header.classList.add('scrolled');
-                else header.classList.remove('scrolled');
-
-                if(window.innerWidth >= 1024) {
-                    parallaxElements.forEach(el => {
-                        let speed = el.getAttribute('data-speed');
-                        if (speed) el.style.transform = `translateY(${scrollY * speed}px)`;
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        document.body.classList.remove('menu-open');
+                        mobileNav.classList.remove('active');
+                        document.body.style.overflow = '';
                     });
-                } else {
-                    parallaxElements.forEach(el => el.style.transform = 'none');
-                }
-            });
+                });
+            }
 
-            const revealElements = document.querySelectorAll('.js-reveal, .js-wow-reveal');
-            const observer = new IntersectionObserver((entries, obs) => {
+            /* --- 2. Animazione Hero al Caricamento --- */
+            const heroLines = document.querySelectorAll('.hero-title .line span');
+            const heroSub = document.querySelector('.hero-subtitle');
+            
+            setTimeout(() => {
+                heroLines.forEach((span, index) => {
+                    span.style.transition = `transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.15}s, opacity 1s ease ${index * 0.15}s`;
+                    span.style.transform = 'translateY(0)';
+                    span.style.opacity = '1';
+                });
+                if(heroSub) {
+                    heroSub.style.transition = `transform 1s ease 0.5s, opacity 1s ease 0.5s`;
+                    heroSub.style.transform = 'translateY(0)';
+                    heroSub.style.opacity = '1';
+                }
+            }, 100);
+
+            /* --- 3. Scroll Reveal via Intersection Observer --- */
+            const reveals = document.querySelectorAll('.js-reveal');
+            const scrollObserver = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-revealed');
-                        obs.unobserve(entry.target); 
+                        obs.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.05, rootMargin: "0px 0px -30px 0px" });
-            revealElements.forEach(el => observer.observe(el));
+            }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+            
+            reveals.forEach(el => scrollObserver.observe(el));
 
-            const slides = document.querySelectorAll('.slide');
-            const bgSection = document.querySelector('.js-slider-section');
-            const bgFooter = document.querySelector('.js-footer-bg');
-            let current = 0;
-            let isAnimating = false;
-
-            function updateSlider(newIndex) {
-                if (isAnimating || newIndex === current) return;
-                isAnimating = true;
+            /* --- 4. Logica Dark/Light Mode Header --- */
+            const header = document.querySelector('.js-header');
+            const sections = document.querySelectorAll('section');
+            
+            window.addEventListener('scroll', () => {
+                let isDarkModeSection = false;
                 
-                const currentSlide = slides[current];
-                const nextSlide = slides[newIndex];
-                
-                currentSlide.classList.remove('active');
-                current = newIndex;
-                nextSlide.classList.add('active');
-                
-                const theme = nextSlide.getAttribute('data-theme');
-                bgSection.style.backgroundColor = theme;
-                bgFooter.style.backgroundColor = theme;
-
-                setTimeout(() => { isAnimating = false; }, 1200);
-            }
-
-            if(slides.length > 0) {
-                document.querySelector('.js-next').addEventListener('click', () => updateSlider(current === slides.length - 1 ? 0 : current + 1));
-                document.querySelector('.js-prev').addEventListener('click', () => updateSlider(current === 0 ? slides.length - 1 : current - 1));
-            }
-
-            const menuToggle = document.querySelector('.js-menu-toggle');
-            const mainNav = document.querySelector('.js-nav');
-
-            if (menuToggle && mainNav) {
-                menuToggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    document.body.classList.toggle('menu-open');
-                    mainNav.classList.toggle('active');
+                sections.forEach(sec => {
+                    const rect = sec.getBoundingClientRect();
+                    // Se la sezione è nella metà superiore dello schermo
+                    if (rect.top <= 60 && rect.bottom >= 60) {
+                        isDarkModeSection = sec.classList.contains('dark-mode');
+                    }
                 });
+                
+                if(!isDarkModeSection) {
+                    header.style.mixBlendMode = 'normal';
+                    header.style.color = 'var(--color-dark)';
+                } else {
+                    header.style.mixBlendMode = 'difference';
+                    header.style.color = 'var(--color-white)';
+                }
 
-                document.querySelectorAll('.js-nav a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        document.body.classList.remove('menu-open');
-                        mainNav.classList.remove('active');
-                    });
+                if(window.scrollY > 50) {
+                    header.style.padding = 'calc(var(--space-sm)) 0';
+                } else {
+                    header.style.padding = 'var(--space-md) 0';
+                }
+            }, { passive: true });
+
+            /* --- 5. Slider Casi Studio --- */
+            const slides = document.querySelectorAll('.case-slide');
+            const btnNext = document.querySelector('.js-next-case');
+            const btnPrev = document.querySelector('.js-prev-case');
+            let currentSlide = 0;
+
+            const changeSlide = (index) => {
+                slides.forEach(s => s.classList.remove('active'));
+                slides[index].classList.add('active');
+            };
+
+            if(btnNext && btnPrev && slides.length > 0) {
+                btnNext.addEventListener('click', () => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    changeSlide(currentSlide);
+                });
+                btnPrev.addEventListener('click', () => {
+                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    changeSlide(currentSlide);
                 });
             }
 
-            const contactForm = document.querySelector('.contact-form');
+            /* --- 6. Validazione e Invio Form (V1 ripristinato) --- */
+            const contactForm = document.querySelector('.js-form');
             if (contactForm) {
                 contactForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    const submitBtn = contactForm.querySelector('.btn-submit');
+                    const submitBtn = contactForm.querySelector('.btn-submit span');
+                    const feedbackMsg = document.getElementById('status-feedback');
+                    
                     submitBtn.textContent = "Elaborazione...";
-                    submitBtn.disabled = true;
+                    contactForm.querySelector('button').disabled = true;
 
+                    // Simulazione di chiamata al server
                     setTimeout(() => {
                         contactForm.parentElement.innerHTML = `
-                            <div style="padding: 3rem 0; border-top: 2px solid var(--color-dark);">
+                            <div style="background: var(--color-white); padding: var(--space-lg); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: center;">
                                 <h3 style="font-family: var(--font-serif); font-size: 2.5rem; line-height: 1; color: var(--color-dark); margin-bottom: 1rem;">Ricevuto.</h3>
-                                <p style="color: var(--color-dark); font-size: 1.1rem; max-width: 400px;">La tua richiesta è nel nostro sistema. Ti contatteremo a breve.</p>
+                                <p style="color: #555; font-size: 1.1rem;">La tua richiesta è nel nostro sistema protetto. Sarai ricontattato entro 24 ore dal nostro team.</p>
                             </div>
                         `;
                     }, 1500);

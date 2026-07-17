@@ -34,6 +34,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body { background-color: var(--color-white); color: var(--color-dark); font-family: var(--font-sans); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        body.menu-open { overflow: hidden; } /* Previene lo scroll della pagina quando il menu mobile è aperto */
         a { text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
         a:hover { opacity: 0.6; }
         
@@ -89,6 +90,22 @@
         .btn-header { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 0.6rem 1.2rem; border: 1px solid var(--color-dark); border-radius: 50px; transition: all 0.3s ease; }
         .btn-header:hover { background-color: var(--color-dark); color: var(--color-white); }
 
+        /* Menu Hamburger Mobile */
+        .menu-toggle {
+            display: block; background: none; border: none; cursor: pointer;
+            width: 24px; height: 16px; position: relative; z-index: 1001;
+        }
+        .menu-toggle span {
+            display: block; width: 100%; height: 2px; background-color: var(--color-dark);
+            position: absolute; transition: transform 0.3s var(--ease-out-expo), top 0.3s var(--ease-out-expo), background-color 0.3s ease;
+        }
+        .menu-toggle span:first-child { top: 2px; }
+        .menu-toggle span:last-child { bottom: 2px; }
+
+        /* Hamburger in stato attivo */
+        .menu-open .menu-toggle span:first-child { transform: rotate(45deg); top: 7px; }
+        .menu-open .menu-toggle span:last-child { transform: rotate(-45deg); top: 7px; }
+
         /* =========================================
            3. HERO SECTION
         ========================================= */
@@ -138,6 +155,11 @@
         .hero-right { opacity: 0; transform: translateY(20px); animation: fadeInUP 1s var(--ease-out-expo) 0.8s forwards; display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start; }
         @keyframes fadeInUP { to { opacity: 1; transform: translateY(0); } }
         .hero-desc { font-weight: 500; font-size: 1.1rem; max-width: 450px; line-height: 1.6; }
+
+        /* Ottimizzazione GPU per Parallax */
+        .js-parallax {
+            will-change: transform;
+        }
 
         /* =========================================
            4. SERVIZI
@@ -264,6 +286,18 @@
         /* =========================================
            9. RESPONSIVE (DESKTOP)
         ========================================= */
+        @media (max-width: 1023px) {
+            .main-nav { 
+                display: flex; flex-direction: column; justify-content: center; align-items: center;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: var(--color-white); z-index: 1000;
+                transform: translateY(-100%); transition: transform 0.5s var(--ease-out-expo);
+                gap: 2rem;
+            }
+            .main-nav.active { transform: translateY(0); }
+            .main-nav a { font-size: 1.5rem; }
+        }
+
         @media (min-width: 768px) {
             .container { padding: 0 3rem; }
             .section { padding: 8rem 0; }
@@ -295,6 +329,7 @@
 
         @media (min-width: 1024px) {
             .main-nav { display: flex; }
+            .menu-toggle { display: none; }
             .btn-header { font-size: 0.85rem; }
             .hero { padding-top: 180px; }
             .hero-layout { grid-template-columns: 60% 40%; align-items: center; gap: 2rem; }
@@ -332,7 +367,13 @@
                 <a href="#chi-siamo">Lo Studio</a>
                 <a href="#portfolio">Archivio</a>
             </nav>
-            <a href="#contatti" class="btn-header">Inizia Progetto</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="#contatti" class="btn-header">Inizia Progetto</a>
+                <button class="menu-toggle js-menu-toggle" aria-label="Apri menu">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -348,7 +389,7 @@
                     </h1>
                 </div>
                 <div class="hero-right">
-                    <p class="hero-desc">Architetture digitali proprietarie per brand d'eccellenza. Niente template. Solo ecosistemi web sicuri, ottimizzati e velocissimi.</p>
+                    <p class="hero-desc">Siti web ultra-veloci da smartphone, scritti in codice puro. Nessun template pronto, nessun abbonamento mensile. Creiamo l'asset digitale definitivo per la tua attività.</p>
                     <a href="#contatti" class="btn-outline">Scopri il Metodo</a>
                 </div>
             </div>
@@ -366,7 +407,7 @@
                     <div class="service-card">
                         <span class="card-number">02.</span>
                         <h3>Sicurezza Strutturale</h3>
-                        <p>Sistemi headless senza database esposti. Impossibili da hackerare, <span class="text-accent">zero necessità</span> di manutenzione server.</p>
+                        <p>Sistemi headless senza database esposti. Impossibili da hackerare, <span class="text-accent">zero necessità</span> di manutenzione server. Dimentica gli aggiornamenti di WordPress.</p>
                     </div>
                     <div class="service-card">
                         <span class="card-number">03.</span>
@@ -380,7 +421,6 @@
         <section id="chi-siamo" class="section">
             <div class="container split-section">
                 
-                <!-- Badge spostato e calibrato per fare ponte tra le sezioni -->
                 <div class="badge-wrapper js-reveal">
                     <svg viewBox="0 0 100 100">
                         <defs>
@@ -416,7 +456,7 @@
                                 <a href="#" class="slide-link">Esplora il progetto</a>
                             </div>
                             <div class="slide-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="Atelier Forma">
+                                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="Atelier Forma" width="1000" height="750">
                             </div>
                         </div>
                         <div class="slide" data-theme="var(--theme-2)">
@@ -426,7 +466,7 @@
                                 <a href="#" class="slide-link">Esplora il progetto</a>
                             </div>
                             <div class="slide-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1541888081622-0d1dc903fb24?q=80&w=1000&auto=format&fit=crop" alt="Tenuta San Rocco">
+                                <img src="https://images.unsplash.com/photo-1541888081622-0d1dc903fb24?q=80&w=1000&auto=format&fit=crop" alt="Tenuta San Rocco" width="1000" height="750">
                             </div>
                         </div>
                         <div class="slide" data-theme="var(--theme-3)">
@@ -436,7 +476,7 @@
                                 <a href="#" class="slide-link">Esplora il progetto</a>
                             </div>
                             <div class="slide-image-wrapper">
-                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Nexus Tech">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Nexus Tech" width="1000" height="750">
                             </div>
                         </div>
                     </div>
@@ -484,7 +524,7 @@
                             <label class="input-label">Panoramica del progetto</label>
                             <textarea rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn-submit">Invia Richiesta</button>
+                        <button type="submit" class="btn-submit">Richiedi una bozza gratuita</button>
                     </form>
                 </div>
             </div>
@@ -522,6 +562,7 @@
             const header = document.querySelector('.js-header');
             const parallaxElements = document.querySelectorAll('.js-parallax');
 
+            // Header Scrolled & Parallax
             window.addEventListener('scroll', () => {
                 let scrollY = window.scrollY;
                 
@@ -536,6 +577,7 @@
                 });
             });
 
+            // Element Reveal Observer
             const revealElements = document.querySelectorAll('.js-reveal');
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
@@ -547,6 +589,7 @@
             }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
             revealElements.forEach(el => observer.observe(el));
 
+            // Portfolio Slider
             const slides = document.querySelectorAll('.slide');
             const bgSection = document.querySelector('.js-slider-section');
             const bgFooter = document.querySelector('.js-footer-bg');
@@ -571,6 +614,47 @@
             if(slides.length > 0) {
                 document.querySelector('.js-next').addEventListener('click', () => updateSlider(current === slides.length - 1 ? 0 : current + 1));
                 document.querySelector('.js-prev').addEventListener('click', () => updateSlider(current === 0 ? slides.length - 1 : current - 1));
+            }
+
+            // Mobile Menu Toggle Logic
+            const menuToggle = document.querySelector('.js-menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            const navLinks = document.querySelectorAll('.main-nav a');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('menu-open');
+                    mainNav.classList.toggle('active');
+                });
+
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        document.body.classList.remove('menu-open');
+                        mainNav.classList.remove('active');
+                    });
+                });
+            }
+
+            // AJAX Form Submission Simulation (Zero ricarica pagina)
+            const contactForm = document.querySelector('#contatti form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Blocca il ricaricamento nativo della pagina
+                    
+                    const submitBtn = contactForm.querySelector('.btn-submit');
+                    submitBtn.textContent = "Invio in corso...";
+                    submitBtn.disabled = true;
+
+                    // Simuliamo l'invio dati (potrete sostituire questo blocco per collegare Formspree o Netlify)
+                    setTimeout(() => {
+                        contactForm.innerHTML = `
+                            <div style="text-align: center; padding: 2.5rem 0; animation: fadeInUP 1s var(--ease-out-expo) forwards;">
+                                <h3 style="font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 1rem;">Grazie!</h3>
+                                <p>La tua richiesta è stata ricevuta correttamente. Ti risponderemo entro 24 ore.</p>
+                            </div>
+                        `;
+                    }, 1500);
+                });
             }
         });
     </script>

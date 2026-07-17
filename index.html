@@ -140,21 +140,14 @@
             animation: cinematicReveal 1.4s var(--ease-out-expo) forwards;
         }
         
-        /* Sartoriale - Sfumature Glow Premium */
         .hero-title span:nth-child(2) { 
             font-family: var(--font-serif); font-size: 22vw; font-weight: 400; text-align: left; padding-left: 2%; 
-            
-            /* Gradiente Oro/Bronzo animato */
             background: linear-gradient(to right, #B89053, #E3C58B, #a17737, #B89053);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            
-            /* Doppio glow raffinato */
             text-shadow: 0px 0px 15px rgba(227, 197, 139, 0.4), 0px 0px 35px rgba(184, 144, 83, 0.15);
-            
-            /* Combinazione dell'apparizione (reveal) e dell'effetto shimmer sul gradiente */
             animation: cinematicReveal 1.4s var(--ease-out-expo) forwards, shimmerGlow 8s linear infinite;
             animation-delay: 0.2s, 1.6s;
         } 
@@ -177,7 +170,7 @@
         .js-parallax { will-change: transform; }
 
         /* =========================================
-           4. LA FONDAZIONE - GRIGLIA HIGH CONTRAST (ORIZZONTALE SU MOBILE)
+           4. LA FONDAZIONE - GRIGLIA SOBRIA (OTTIMIZZATA MOBILE)
         ========================================= */
         .editorial-grid { 
             display: flex; 
@@ -189,43 +182,62 @@
             padding-bottom: 2rem;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            width: 100%;
         }
         
         .editorial-grid::-webkit-scrollbar { display: none; }
         
         .service-card { 
-            background-color: var(--color-dark);
+            background-color: #121212; /* Nero sobrio ed elegante */
             color: var(--color-white);
-            padding: 3rem 2rem;
-            border-radius: 4px;
+            padding: 2.5rem 1.8rem;
+            border-radius: 2px; /* Angoli netti brutalisti */
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.4s var(--ease-out-expo);
+            gap: 1.2rem;
+            box-shadow: none; /* Rimosse ombre pesanti per massima sobrietà */
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.4s var(--ease-out-expo), background-color 0.4s ease;
+            width: 85vw;
             min-width: 85vw;
+            max-width: 85vw; /* Impedisce al testo di allargare la card */
             flex-shrink: 0;
             scroll-snap-align: start;
         }
         
-        .service-card:hover { transform: translateY(-5px); }
+        .service-card:hover { transform: translateY(-3px); background-color: #161616; }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 1.2rem;
         }
 
-        .card-number { font-family: var(--font-serif); font-style: italic; font-size: 3.5rem; line-height: 1; color: var(--color-accent); }
-        .card-label { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
+        .card-number { font-family: var(--font-serif); font-style: italic; font-size: 3rem; line-height: 1; color: var(--color-accent); }
+        .card-label { font-family: var(--font-sans); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); }
 
-        .service-card h3 { font-size: 2.2rem; font-family: var(--font-serif); font-weight: 400; line-height: 1.1; letter-spacing: -0.01em; color: var(--color-white); }
-        .service-card p { font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,0.7); }
+        /* Controllo totale dell'interruzione testo per evitare overflow orizzontale */
+        .service-card h3 { 
+            font-size: 1.6rem; 
+            font-family: var(--font-serif); 
+            font-weight: 400; 
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            color: var(--color-white);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        
+        .service-card p { 
+            font-size: 0.95rem; 
+            line-height: 1.5; 
+            color: rgba(255,255,255,0.55); 
+            overflow-wrap: break-word;
+        }
 
         .js-reveal { opacity: 0; transform: translateY(30px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
         .js-reveal.is-revealed { opacity: 1; transform: translateY(0); }
@@ -288,48 +300,61 @@
         .nav-arrow { width: 45px; height: 45px; background-color: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: var(--color-white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
         
         /* =========================================
-           7. CONTATTI E FORM EDITORIALE (AGGIORNATO AWWWARDS STYLE)
+           7. CONTATTI E FORM EDITORIALE (ANIMAZIONE INIZIA LA DISCUSSIONE POTENZIATA)
         ========================================= */
         #contatti { background-color: var(--color-stone); padding-top: 6rem; }
         .contact-header { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 4rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 3rem;}
         .contact-header h2 { font-size: 3.8rem; line-height: 0.95; margin-bottom: 0; }
         .contact-header p { padding-left: 8%; }
 
-        /* Override base reveal per l'header contatti */
+        /* Rimozione vecchie impostazioni base reveal per l'header */
         .contact-header.js-reveal { opacity: 1; transform: none; transition: none; }
         
-        /* Animazione tipografica Awwwards (Text Mask & Rotate) */
+        /* Nuova Animazione Cinematica "Awwwards High Premium" (Mask + 3D Skew + Blur + Scale) */
         .reveal-mask { 
             display: block; 
             overflow: hidden; 
             padding-bottom: 0.15em; 
             margin-bottom: -0.15em; 
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 1.6s var(--ease-out-expo);
         }
         .reveal-line { 
             display: block; 
-            transform: translateY(110%) rotate(2deg); 
-            transform-origin: top left;
+            transform: translateY(105%) scaleY(1.4) skewY(8deg); 
+            transform-origin: left bottom;
             opacity: 0;
-            transition: transform 1.5s var(--ease-out-expo), opacity 1s ease; 
-            will-change: transform, opacity;
+            filter: blur(15px);
+            transition: transform 1.8s var(--ease-out-expo), opacity 1.4s ease, filter 1.2s ease; 
+            will-change: transform, opacity, filter;
         }
         
+        /* Attivazione scaglionata (Stagger) dell'effetto spettacolare */
+        .contact-header.is-revealed .reveal-mask:nth-of-type(1) { clip-path: inset(0 0 0 0); }
         .contact-header.is-revealed .reveal-mask:nth-of-type(1) .reveal-line { 
-            transform: translateY(0) rotate(0); opacity: 1; transition-delay: 0.1s; 
-        }
-        .contact-header.is-revealed .reveal-mask:nth-of-type(2) .reveal-line { 
-            transform: translateY(0) rotate(0); opacity: 1; transition-delay: 0.25s; 
+            transform: translateY(0) scaleY(1) skewY(0); opacity: 1; filter: blur(0); transition-delay: 0.05s; 
         }
         
+        .contact-header.is-revealed .reveal-mask:nth-of-type(2) { clip-path: inset(0 0 0 0); transition-delay: 0.15s; }
+        .contact-header.is-revealed .reveal-mask:nth-of-type(2) .reveal-line { 
+            transform: translateY(0) scaleY(1) skewY(0); opacity: 1; filter: blur(0); transition-delay: 0.15s; 
+        }
+        
+        /* Animazione fluida di espansione e tracking del Paragrafo */
         .awwwards-desc {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1.2s ease, transform 1.5s var(--ease-out-expo);
+            transform: translateY(35px) scale(0.97);
+            filter: blur(8px);
+            letter-spacing: 0.05em;
+            transition: opacity 1.5s ease, transform 1.8s var(--ease-out-expo), filter 1.2s ease, letter-spacing 1.8s var(--ease-out-expo);
+            will-change: transform, opacity, filter;
         }
         .contact-header.is-revealed .awwwards-desc {
             opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.4s;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+            letter-spacing: normal;
+            transition-delay: 0.45s;
         }
 
         /* Resto Contatti */
@@ -377,9 +402,11 @@
             
             .btn-outline { width: auto; }
 
+            /* Ripristino struttura regolare griglia desktop */
             .editorial-grid { flex-direction: row; gap: 2rem; overflow-x: visible; padding-bottom: 0; }
-            .service-card { flex: 1; padding: 3rem; min-width: 0; scroll-snap-align: none; }
+            .service-card { flex: 1; padding: 3rem; min-width: 0; max-width: none; width: auto; scroll-snap-align: none; background-color: var(--color-dark); border-radius: 4px; }
             .service-card h3 { font-size: 2rem; }
+            .service-card p { font-size: 1.05rem; }
             
             #chi-siamo { padding-top: 10rem; }
             .split-right { padding-left: 0; }
@@ -571,7 +598,7 @@
 
         <section id="contatti" class="bg-stone">
             <div class="container">
-                <!-- HTML Aggiornato con l'animazione Awwwards Style -->
+                <!-- HTML Potenziato con Struttura ad Impatto Awwwards -->
                 <div class="contact-header js-reveal">
                     <h2>
                         <span class="reveal-mask"><span class="reveal-line">Inizia la</span></span>

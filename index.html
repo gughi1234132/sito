@@ -17,7 +17,7 @@
             --color-white: #FFFFFF;
             --color-stone: #F5F4F0;   
             --color-dark: #111111;    
-            --color-accent: #D34324; /* NUOVO: Colore d'accento elegante per spezzare la monotonia */
+            --color-accent: #D34324; 
             
             --theme-1: #1C2A21;
             --theme-2: #2C211F;
@@ -52,7 +52,6 @@
         h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
         p { font-size: 1.05rem; color: #4A4A4A; }
 
-        /* NUOVO: Classi tipografiche d'accento */
         .text-accent { color: var(--color-accent); font-weight: 600; }
         .italic-accent { font-style: italic; color: var(--color-accent); }
 
@@ -89,7 +88,7 @@
         .btn-header:hover { background-color: var(--color-dark); color: var(--color-white); }
 
         /* =========================================
-           3. HERO SECTION
+           3. HERO SECTION (Fix Mobile Pieno Schermo)
         ========================================= */
         .hero { 
             position: relative; min-height: 100vh; display: flex; flex-direction: column; 
@@ -97,7 +96,7 @@
             padding-top: 120px; padding-bottom: 4rem;
         }
 
-        .hero-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: end; }
+        .hero-layout { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: end; width: 100%; }
 
         .micro-label {
             display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
@@ -106,18 +105,27 @@
             animation: fadeInUP 1s var(--ease-out-expo) 0.2s forwards; opacity: 0; transform: translateY(10px);
         }
 
-        .hero-left { animation: slowFloat 6s ease-in-out infinite alternate; }
+        .hero-left { animation: slowFloat 6s ease-in-out infinite alternate; width: 100%; }
         @keyframes slowFloat { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
 
+        .hero-title { width: 100%; }
         .hero-title span { 
-            display: block; opacity: 0; 
+            display: block; opacity: 0; width: 100%;
             transform: translateY(40px) scale(0.98); filter: blur(10px);
             animation: cinematicReveal 1.2s var(--ease-out-expo) forwards; 
-            color: var(--color-dark); font-size: clamp(4rem, 16vw, 11rem); line-height: 0.85; letter-spacing: -0.04em;
+            color: var(--color-dark); 
+            
+            /* NUOVO: Grandezza estrema su mobile e allineamento a zig-zag per coprire la larghezza */
+            font-size: 18vw; 
+            line-height: 0.85; 
+            letter-spacing: -0.04em;
         }
-        .hero-title span:nth-child(1) { animation-delay: 0.1s; }
-        .hero-title span:nth-child(2) { animation-delay: 0.25s; padding-left: 12vw; } 
-        .hero-title span:nth-child(3) { animation-delay: 0.4s; padding-left: 5vw; }
+        
+        /* Mobile layout: zig-zag puro per riempire orizzontalmente senza pad */
+        .hero-title span:nth-child(1) { animation-delay: 0.1s; text-align: left; }
+        .hero-title span:nth-child(2) { animation-delay: 0.25s; text-align: center; } 
+        .hero-title span:nth-child(3) { animation-delay: 0.4s; text-align: right; }
+        
         @keyframes cinematicReveal { to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
 
         .hero-title em {
@@ -133,21 +141,20 @@
         .hero-desc { font-weight: 500; font-size: 1.1rem; max-width: 450px; line-height: 1.6; }
 
         /* =========================================
-           4. SERVIZI (Mobile: Slider Orizzontale)
+           4. SERVIZI
         ========================================= */
         .js-reveal { opacity: 0; transform: translateY(50px) scale(0.98); transition: opacity 1s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
         .js-reveal.is-revealed { opacity: 1; transform: translateY(0) scale(1); }
         
-        /* NUOVO: Slider orizzontale a scatto per spezzare la colonna su mobile */
         .editorial-grid { 
             display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
             gap: 1.5rem; padding: 1rem 0 2rem 0; margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem;
-            scrollbar-width: none; /* Nasconde scrollbar su Firefox */
+            scrollbar-width: none; 
         }
-        .editorial-grid::-webkit-scrollbar { display: none; } /* Nasconde scrollbar Chrome/Safari */
+        .editorial-grid::-webkit-scrollbar { display: none; } 
         
         .service-card { 
-            min-width: 85vw; /* Occupa quasi tutto lo schermo */
+            min-width: 85vw; 
             scroll-snap-align: center; 
             background: var(--color-white); padding: 2rem; border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.03);
@@ -158,19 +165,27 @@
         .service-card h3 { font-size: 1.5rem; font-family: var(--font-sans); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem;}
 
         /* =========================================
-           5. CHI SIAMO (Testo e Colori)
+           5. CHI SIAMO (Badge Fisso)
         ========================================= */
+        /* Tolto padding-top eccessivo per avvicinare le sezioni */
+        #chi-siamo { padding-top: 4rem; } 
+        
         .split-section { display: grid; grid-template-columns: 1fr; gap: 3rem; position: relative; }
         
-        .badge-wrapper { position: absolute; right: 10px; top: -40px; width: 100px; height: 100px; opacity: 0.7; animation: spinBadge 15s linear infinite; z-index: 5; pointer-events: none; }
-        @keyframes spinBadge { 100% { transform: rotate(360deg); } }
+        /* NUOVO BADGE: Fermo, solido, posizionato a cavallo tra il grigio e il bianco in alto a destra */
+        .badge-wrapper { 
+            position: absolute; right: 0; top: -100px; /* A cavallo delle due sezioni */
+            width: 110px; height: 110px; opacity: 1; 
+            z-index: 10; pointer-events: none; 
+            background: var(--color-white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .badge-wrapper svg { width: 90px; height: 90px; }
         
         .split-left { position: relative; }
-        
-        /* NUOVO: Layout dinamico per il testo su mobile */
         .split-right { position: relative; padding-left: 1.5rem; }
         
-        /* NUOVO: Linea animata che cresce mentre si scorre */
         .animated-line {
             position: absolute; left: 0; top: 0; width: 3px; height: 0;
             background-color: var(--color-accent);
@@ -213,27 +228,48 @@
         .nav-arrow:hover { background-color: var(--color-white); color: var(--color-dark); transform: scale(1.05); }
 
         /* =========================================
-           7. CONTATTI E FOOTER
+           7. CONTATTI (Look Agenzia Premium)
         ========================================= */
-        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-        .contact-email { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); display: block; color: var(--color-dark); margin-bottom: 0.5rem; transition: color 0.3s ease;}
+        #contatti { background-color: var(--color-stone); border-top: 1px solid rgba(0,0,0,0.05); }
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
+        
+        .contact-info-blocks { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .info-block h4 { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 0.5rem; }
+        .contact-email { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3rem); display: inline-block; color: var(--color-dark); transition: color 0.3s ease; line-height: 1;}
         .contact-email:hover { color: var(--color-accent); }
-        .input-line { margin-bottom: 2rem; }
-        .input-line input, .input-line textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(0,0,0,0.2); padding: 1rem 0; font-family: var(--font-sans); font-size: 1.1rem; resize: none; transition: border-color 0.3s ease; }
-        .input-line input:focus, .input-line textarea:focus { outline: none; border-bottom-color: var(--color-accent); }
-        .site-footer { padding: 3rem 0; transition: background-color 1s ease; }
-        .footer-layout { display: flex; flex-direction: column; gap: 1.5rem; text-align: center; }
-        .footer-left h3 { margin: 0; font-size: 2rem; }
-        .footer-right { display: flex; justify-content: center; gap: 2rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .contact-form-wrapper { background: var(--color-white); padding: 3rem 2rem; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
+        .input-line { margin-bottom: 2.5rem; position: relative; }
+        .input-label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.5rem; color: #444; }
+        .input-line input, .input-line textarea { width: 100%; background: transparent; border: none; border-bottom: 2px solid rgba(0,0,0,0.1); padding: 0.5rem 0; font-family: var(--font-sans); font-size: 1.1rem; resize: none; transition: border-color 0.3s ease; border-radius: 0;}
+        .input-line input:focus, .input-line textarea:focus { outline: none; border-bottom-color: var(--color-dark); }
+        
+        .btn-submit { width: 100%; text-align: center; background-color: var(--color-dark); color: var(--color-white); padding: 1.5rem; font-family: var(--font-sans); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: background-color 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em; }
+        .btn-submit:hover { background-color: var(--color-accent); }
 
         /* =========================================
-           8. RESPONSIVE (DESKTOP - PROTETTO)
+           8. FOOTER (Corporate Premium)
+        ========================================= */
+        .site-footer { padding: 5rem 0 2rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer-top { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-bottom: 4rem; }
+        
+        .footer-brand h2 { font-size: 3rem; margin-bottom: 0.5rem; }
+        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+        
+        .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .link-col h4 { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
+        .link-col a { display: block; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.9); }
+        .link-col a:hover { color: var(--color-white); transform: translateX(5px); }
+        
+        .footer-bottom { display: flex; flex-direction: column; gap: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+        /* =========================================
+           9. RESPONSIVE (DESKTOP)
         ========================================= */
         @media (min-width: 768px) {
             .container { padding: 0 3rem; }
             .section { padding: 8rem 0; }
             
-            /* Ripristina la griglia standard per desktop, rimuovendo lo slider mobile */
             .editorial-grid { 
                 display: grid; grid-template-columns: repeat(3, 1fr); padding-top: 4rem; gap: 3rem; 
                 overflow: visible; margin: 0; padding-left: 0; padding-right: 0;
@@ -248,11 +284,15 @@
             .card-number { font-size: 1.5rem; margin-bottom: 1.5rem; font-family: var(--font-serif); color: var(--color-dark); opacity: 0.5; transition: color 0.3s ease, opacity 0.3s ease; }
             .service-card:hover .card-number { color: var(--color-accent); opacity: 1; }
             
+            #chi-siamo { padding-top: 8rem; }
             .split-right { padding-left: 0; }
-            .animated-line { display: none; /* Rimuoviamo la linea su desktop per pulizia */ }
+            .animated-line { display: none; }
 
-            .contact-grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
-            .footer-layout { flex-direction: row; justify-content: space-between; align-items: center; text-align: left; }
+            .contact-grid { grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+            .contact-form-wrapper { padding: 4rem; }
+            
+            .footer-top { grid-template-columns: 2fr 1fr; }
+            .footer-bottom { flex-direction: row; justify-content: space-between; }
         }
 
         @media (min-width: 1024px) {
@@ -260,13 +300,18 @@
             .btn-header { font-size: 0.85rem; }
             .hero { padding-top: 180px; }
             .hero-layout { grid-template-columns: 60% 40%; align-items: center; gap: 2rem; }
-            .hero-title span:nth-child(2) { padding-left: 10%; }
-            .hero-title span:nth-child(3) { padding-left: 0; }
+            
+            /* Ripristino Hero per Desktop: elegante e controllata */
+            .hero-title span { font-size: clamp(3.5rem, 10vw, 9rem); text-align: left !important; }
+            .hero-title span:nth-child(2) { padding-left: 10% !important; }
+            .hero-title span:nth-child(3) { padding-left: 0 !important; }
+            
             .hero-right { padding-left: 3rem; border-left: 1px solid rgba(0,0,0,0.1); }
             
             .split-section { grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
-            .badge-wrapper { right: auto; left: 50%; top: -30px; transform: translateX(-50%); width: 130px; height: 130px; }
-            @keyframes spinBadge { 100% { transform: translateX(-50%) rotate(360deg); } }
+            
+            /* Badge Fisso su Desktop */
+            .badge-wrapper { right: auto; left: 50%; top: -60px; transform: translateX(-50%); width: 120px; height: 120px; }
 
             .js-slider-section { padding: 8rem 0; }
             .slider-container { max-width: 1200px; margin: 0 auto; }
@@ -312,7 +357,6 @@
             </div>
         </section>
 
-        <!-- Servizi: Ora sono un CAROSELLO HORIZONTAL su mobile! -->
         <section id="servizi" class="section bg-stone bg-grid">
             <div class="container">
                 <h2 class="js-reveal">I fondamenti.</h2>
@@ -336,12 +380,12 @@
             </div>
         </section>
 
-        <!-- Chi Siamo: Aggiunta Linea Dinamica e accenti di colore -->
         <section id="chi-siamo" class="section">
             <div class="container split-section">
                 
-                <div class="badge-wrapper js-parallax" data-speed="-0.2">
-                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <!-- Badge Fisso, Solido e Posizionato Correttamente -->
+                <div class="badge-wrapper js-reveal">
+                    <svg viewBox="0 0 100 100">
                         <defs>
                             <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
                         </defs>
@@ -356,9 +400,7 @@
                 </div>
                 
                 <div class="split-right js-reveal">
-                    <!-- Linea di scorrimento laterale -->
                     <div class="animated-line"></div>
-                    
                     <p class="lead">Restituiamo il <span class="text-accent">pieno controllo</span> alle aziende, progettando asset web esclusivi e strutturalmente sicuri.</p>
                     <p>Rifiutiamo le logiche degli abbonamenti vincolanti e dei temi prefabbricati. Il nostro approccio restituisce valore all'azienda: consegniamo <span class="text-accent">codice proprietario</span>, scalabile e destinato a durare nel tempo, cucito esattamente sulle necessità specifiche del tuo business.</p>
                 </div>
@@ -413,34 +455,72 @@
             </div>
         </section>
 
+        <!-- Nuova Sezione Contatti Premium -->
         <section id="contatti" class="section">
             <div class="container contact-grid">
-                <div class="js-reveal">
-                    <h2>Iniziamo.</h2>
-                    <p style="margin-bottom: 2rem;">Scrivici le tue necessità. Rispondiamo entro 24 ore con un'analisi tecnica preliminare.</p>
-                    <a href="mailto:info@studiocodice.it" class="contact-email">info@studiocodice.it</a>
-                    <p>Via Tortona 14<br>20144, Milano</p>
+                <div class="contact-info js-reveal">
+                    <h2>Avviamo il<br><em>progetto.</em></h2>
+                    <p>Fornisci i dettagli preliminari. Ti risponderemo entro 24 ore con un'analisi tecnica di fattibilità strutturale.</p>
+                    
+                    <div class="contact-info-blocks">
+                        <div class="info-block">
+                            <h4>New Business</h4>
+                            <a href="mailto:info@studiocodice.it" class="contact-email">hello@studiocodice.it</a>
+                        </div>
+                        <div class="info-block">
+                            <h4>Headquarters</h4>
+                            <p>Via Tortona 14<br>20144, Milano (MI) — Italia</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="js-reveal">
+                
+                <div class="contact-form-wrapper js-reveal delay-1">
                     <form>
-                        <div class="input-line"><input type="text" required placeholder="Nome e Azienda"></div>
-                        <div class="input-line"><input type="email" required placeholder="Email aziendale"></div>
-                        <div class="input-line"><textarea rows="2" required placeholder="Dettagli del progetto..."></textarea></div>
-                        <button type="submit" class="btn-solid">Invia Richiesta</button>
+                        <div class="input-line">
+                            <label class="input-label">Nome e Azienda</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="input-line">
+                            <label class="input-label">Email Professionale</label>
+                            <input type="email" required>
+                        </div>
+                        <div class="input-line">
+                            <label class="input-label">Panoramica del progetto</label>
+                            <textarea rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Invia Richiesta</button>
                     </form>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Nuovo Footer Istituzionale -->
     <footer class="site-footer text-white js-footer-bg" style="background-color: var(--theme-1);">
-        <div class="container footer-layout">
-            <div class="footer-left">
-                <h3>Studiocodice.</h3>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h2>Studiocodice.</h2>
+                    <p>Premium Digital Craft<br>Independent Web Architecture</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-col">
+                        <h4>Network</h4>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Dribbble</a>
+                    </div>
+                    <div class="link-col">
+                        <h4>Legal</h4>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="#">Termini e Condizioni</a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-right">
-                <a href="#">LinkedIn</a>
-                <a href="#">Privacy Policy</a>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Studiocodice. Tutti i diritti riservati.</p>
+                <p>P.IVA 12345678901 | REA MI-123456</p>
             </div>
         </div>
     </footer>
@@ -458,7 +538,9 @@
 
                 parallaxElements.forEach(el => {
                     let speed = el.getAttribute('data-speed');
-                    el.style.transform = `translateY(${scrollY * speed}px)`;
+                    if (speed) {
+                        el.style.transform = `translateY(${scrollY * speed}px)`;
+                    }
                 });
             });
 

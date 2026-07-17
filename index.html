@@ -17,11 +17,13 @@
             --color-white: #FFFFFF;
             --color-stone: #F5F4F0;   
             --color-dark: #111111;    
-            --color-accent: #D34324; 
+            /* Nuovo colore accento: Indaco Digitale Elettrico */
+            --color-accent: #4F46E5; 
             
-            --theme-1: #1C2A21;
-            --theme-2: #2C211F;
-            --theme-3: #1A1D24;
+            /* Nuovi temi portfolio: Slate e Dark, zero effetto Ikea */
+            --theme-1: #0F172A; /* Midnight Slate */
+            --theme-2: #171717; /* Neutral Black */
+            --theme-3: #1E1B4B; /* Deep Indigo */
             
             --font-serif: 'Instrument Serif', serif;
             --font-sans: 'Manrope', sans-serif;
@@ -88,7 +90,7 @@
         .btn-header:hover { background-color: var(--color-dark); color: var(--color-white); }
 
         /* =========================================
-           3. HERO SECTION (Fix Mobile Pieno Schermo)
+           3. HERO SECTION
         ========================================= */
         .hero { 
             position: relative; min-height: 100vh; display: flex; flex-direction: column; 
@@ -114,14 +116,11 @@
             transform: translateY(40px) scale(0.98); filter: blur(10px);
             animation: cinematicReveal 1.2s var(--ease-out-expo) forwards; 
             color: var(--color-dark); 
-            
-            /* NUOVO: Grandezza estrema su mobile e allineamento a zig-zag per coprire la larghezza */
             font-size: 18vw; 
             line-height: 0.85; 
             letter-spacing: -0.04em;
         }
         
-        /* Mobile layout: zig-zag puro per riempire orizzontalmente senza pad */
         .hero-title span:nth-child(1) { animation-delay: 0.1s; text-align: left; }
         .hero-title span:nth-child(2) { animation-delay: 0.25s; text-align: center; } 
         .hero-title span:nth-child(3) { animation-delay: 0.4s; text-align: right; }
@@ -165,16 +164,15 @@
         .service-card h3 { font-size: 1.5rem; font-family: var(--font-sans); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem;}
 
         /* =========================================
-           5. CHI SIAMO (Badge Fisso)
+           5. CHI SIAMO
         ========================================= */
-        /* Tolto padding-top eccessivo per avvicinare le sezioni */
         #chi-siamo { padding-top: 4rem; } 
         
         .split-section { display: grid; grid-template-columns: 1fr; gap: 3rem; position: relative; }
         
-        /* NUOVO BADGE: Fermo, solido, posizionato a cavallo tra il grigio e il bianco in alto a destra */
+        /* Badge Base (Mobile) */
         .badge-wrapper { 
-            position: absolute; right: 0; top: -100px; /* A cavallo delle due sezioni */
+            position: absolute; right: 0; top: -100px; 
             width: 110px; height: 110px; opacity: 1; 
             z-index: 10; pointer-events: none; 
             background: var(--color-white); border-radius: 50%;
@@ -228,7 +226,7 @@
         .nav-arrow:hover { background-color: var(--color-white); color: var(--color-dark); transform: scale(1.05); }
 
         /* =========================================
-           7. CONTATTI (Look Agenzia Premium)
+           7. CONTATTI
         ========================================= */
         #contatti { background-color: var(--color-stone); border-top: 1px solid rgba(0,0,0,0.05); }
         .contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
@@ -248,20 +246,20 @@
         .btn-submit:hover { background-color: var(--color-accent); }
 
         /* =========================================
-           8. FOOTER (Corporate Premium)
+           8. FOOTER
         ========================================= */
-        .site-footer { padding: 5rem 0 2rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
-        .footer-top { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-bottom: 4rem; }
+        .site-footer { padding: 3rem 0 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer-top { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2.5rem; }
         
-        .footer-brand h2 { font-size: 3rem; margin-bottom: 0.5rem; }
-        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+        .footer-brand h2 { font-size: 2.5rem; margin-bottom: 0.2rem; }
+        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
         
         .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .link-col h4 { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
-        .link-col a { display: block; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.9); }
+        .link-col h4 { font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+        .link-col a { display: block; margin-bottom: 0.8rem; font-size: 0.9rem; font-weight: 500; color: rgba(255,255,255,0.9); }
         .link-col a:hover { color: var(--color-white); transform: translateX(5px); }
         
-        .footer-bottom { display: flex; flex-direction: column; gap: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+        .footer-bottom { display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); }
 
         /* =========================================
            9. RESPONSIVE (DESKTOP)
@@ -301,7 +299,6 @@
             .hero { padding-top: 180px; }
             .hero-layout { grid-template-columns: 60% 40%; align-items: center; gap: 2rem; }
             
-            /* Ripristino Hero per Desktop: elegante e controllata */
             .hero-title span { font-size: clamp(3.5rem, 10vw, 9rem); text-align: left !important; }
             .hero-title span:nth-child(2) { padding-left: 10% !important; }
             .hero-title span:nth-child(3) { padding-left: 0 !important; }
@@ -310,8 +307,8 @@
             
             .split-section { grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
             
-            /* Badge Fisso su Desktop */
-            .badge-wrapper { right: auto; left: 50%; top: -60px; transform: translateX(-50%); width: 120px; height: 120px; }
+            /* FIX BADGE DESKTOP: Spinto in alto per sormontare la riga e leggermente ingrandito */
+            .badge-wrapper { right: 0; left: auto; top: -160px; transform: none; width: 140px; height: 140px; }
 
             .js-slider-section { padding: 8rem 0; }
             .slider-container { max-width: 1200px; margin: 0 auto; }
@@ -383,7 +380,7 @@
         <section id="chi-siamo" class="section">
             <div class="container split-section">
                 
-                <!-- Badge Fisso, Solido e Posizionato Correttamente -->
+                <!-- Badge spostato e calibrato per fare ponte tra le sezioni -->
                 <div class="badge-wrapper js-reveal">
                     <svg viewBox="0 0 100 100">
                         <defs>
@@ -455,7 +452,6 @@
             </div>
         </section>
 
-        <!-- Nuova Sezione Contatti Premium -->
         <section id="contatti" class="section">
             <div class="container contact-grid">
                 <div class="contact-info js-reveal">
@@ -495,32 +491,28 @@
         </section>
     </main>
 
-    <!-- Nuovo Footer Istituzionale -->
     <footer class="site-footer text-white js-footer-bg" style="background-color: var(--theme-1);">
         <div class="container">
             <div class="footer-top">
                 <div class="footer-brand">
                     <h2>Studiocodice.</h2>
-                    <p>Premium Digital Craft<br>Independent Web Architecture</p>
+                    <p>Independent Web Architecture</p>
                 </div>
                 <div class="footer-links">
                     <div class="link-col">
                         <h4>Network</h4>
                         <a href="#">LinkedIn</a>
                         <a href="#">Instagram</a>
-                        <a href="#">Dribbble</a>
                     </div>
                     <div class="link-col">
                         <h4>Legal</h4>
                         <a href="#">Privacy Policy</a>
-                        <a href="#">Cookie Policy</a>
-                        <a href="#">Termini e Condizioni</a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Studiocodice. Tutti i diritti riservati.</p>
-                <p>P.IVA 12345678901 | REA MI-123456</p>
+                <p>&copy; 2026 Studiocodice.</p>
+                <p>P.IVA 12345678901</p>
             </div>
         </div>
     </footer>

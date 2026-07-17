@@ -76,7 +76,6 @@
         .header-inner { display: flex; justify-content: space-between; align-items: center; position: relative; }
         .logo { font-family: var(--font-serif); font-size: 1.8rem; z-index: 1010; }
         
-        /* Menu Mobile-First: Micro-card elegante sospesa */
         @media (max-width: 1023px) {
             .main-nav { 
                 display: flex; flex-direction: column; 
@@ -94,7 +93,6 @@
             .main-nav a { font-size: 0.95rem; font-weight: 500; letter-spacing: 0.02em; }
         }
 
-        /* Hamburger minimal */
         .menu-toggle {
             display: block; background: none; border: none; cursor: pointer;
             width: 24px; height: 14px; position: relative; z-index: 1010;
@@ -150,19 +148,68 @@
 
         #chi-siamo { padding-top: 4rem; } 
         .split-section { display: grid; grid-template-columns: 1fr; gap: 3rem; position: relative; }
-        .badge-wrapper { position: absolute; right: 0; top: -100px; width: 110px; height: 110px; z-index: 10; background: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); pointer-events: none; }
+        
+        /* =========================================
+           NOVITÀ: ANIMAZIONE SUPER-WOW 3D
+        ========================================= */
+        .wow-heading {
+            perspective: 1200px; /* Abilita lo spazio 3D per i figli */
+        }
+        .wow-heading .mask { 
+            display: inline-block; 
+            overflow: visible; /* Permette alla sfocatura di uscire dai bordi */
+            padding-bottom: 0.1em; 
+            margin-bottom: -0.1em; 
+        }
+        .wow-heading .text {
+            display: inline-block;
+            /* Stato iniziale: basso, lontano (asse Z), ruotato e sfocato */
+            transform: translateY(180%) translateZ(-400px) rotateX(70deg) rotateY(15deg) scale(0.6);
+            filter: blur(25px);
+            opacity: 0;
+            transform-origin: bottom center;
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 1.5s ease;
+        }
+        .js-wow-reveal.is-revealed .wow-heading .text {
+            /* Stato finale: dritto, a fuoco, in primo piano */
+            transform: translateY(0) translateZ(0) rotateX(0) rotateY(0) scale(1);
+            filter: blur(0);
+            opacity: 1;
+        }
+
+        /* Ritardi teatrali */
+        .js-wow-reveal.is-revealed .mask:nth-of-type(1) .text {
+            transition-delay: 0.1s;
+        }
+        .js-wow-reveal.is-revealed .mask:nth-of-type(2) .text {
+            transition-delay: 0.6s; /* Pausa lunga d'impatto prima di "digitale" */
+        }
+
+        /* Glow dinamico sulla parola quando atterra */
+        @keyframes textGlowImpact {
+            0% { text-shadow: 0 0 0 rgba(79, 70, 229, 0); }
+            30% { text-shadow: 0 0 50px rgba(79, 70, 229, 0.9), 0 0 20px rgba(79, 70, 229, 0.6); }
+            100% { text-shadow: 0 0 0 rgba(79, 70, 229, 0); }
+        }
+        .js-wow-reveal.is-revealed .mask:nth-of-type(2) .text {
+            animation: textGlowImpact 2s ease 1.3s forwards;
+        }
+        /* ========================================= */
+
+        .badge-wrapper { position: absolute; right: 0; top: -100px; width: 110px; height: 110px; z-index: 10; background: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); pointer-events: none; transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s ease; }
         .badge-wrapper svg { width: 90px; height: 90px; animation: spin 20s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .split-right p.lead { font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-dark); margin-bottom: 1.5rem; line-height: 1.3; }
 
         /* =========================================
-           5. AWWWARDS CINEMATIC SLIDER (RI-PROGETTATO)
+           5. AWWWARDS CINEMATIC SLIDER
         ========================================= */
         .js-slider-section { position: relative; transition: background-color 1.2s cubic-bezier(0.16, 1, 0.3, 1); padding: 6rem 0; overflow: hidden; }
         .slider-main-wrapper { position: relative; width: 100%; margin-top: 3rem; height: 500px; }
         .slider-container { position: relative; width: 100%; height: 100%; }
         
-        /* Layout a livelli assoluti sovrapposti per la transizione fluida */
         .slide { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; gap: 1.5rem; 
@@ -170,7 +217,6 @@
         }
         .slide.active { opacity: 1; pointer-events: auto; visibility: visible; z-index: 2; }
         
-        /* Animazione tipografica Awwwards: Scorrimento verso l'alto (Overflow hidden) */
         .slide-text-mask { overflow: hidden; display: block; margin-bottom: 0.3rem; }
         
         .slide-cat { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); transform: translateY(100%); transition: transform 0.6s var(--ease-out-expo); }
@@ -181,22 +227,20 @@
         .slide.active .slide-title { transform: translateY(0); transition-delay: 0.2s; }
         .slide.active .slide-link { transform: translateY(0); transition-delay: 0.3s; }
 
-        /* Il capolavoro visivo: Maschera a clip ad apertura geometrica + Parallax inverso */
         .slide-image-wrapper { 
             position: relative; width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 6px; 
-            clip-path: inset(0 0 100% 0); /* Chiuso dall'alto inizialmente */
+            clip-path: inset(0 0 100% 0); 
             transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: clip-path;
         }
-        .slide.active .slide-image-wrapper { clip-path: inset(0 0 0 0); } /* Si apre scendendo verso il basso */
+        .slide.active .slide-image-wrapper { clip-path: inset(0 0 0 0); }
 
         .slide-image-wrapper img { 
             width: 100%; height: 100%; object-fit: cover; display: block; 
-            transform: scale(1.3) translateY(40px); /* Spostato in basso e ingrandito */
+            transform: scale(1.3) translateY(40px); 
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform;
         }
-        /* Quando si attiva, l'immagine sale mentre la tendina scende: Effetto contro-parallax */
         .slide.active .slide-image-wrapper img { transform: scale(1.05) translateY(0); }
 
         .slider-controls { display: flex; justify-content: center; gap: 1rem; position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); z-index: 10; width: 100%; }
@@ -259,17 +303,28 @@
             .hero-right { padding-left: 3rem; border-left: 1px solid rgba(0,0,0,0.1); }
             
             .split-section { grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
-            .badge-wrapper { right: 0; top: -160px; width: 140px; height: 140px; }
+            .badge-wrapper { right: 0; top: -160px; width: 140px; height: 140px; pointer-events: auto; }
+            .badge-wrapper:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 15px 35px rgba(79, 70, 229, 0.25); }
 
-            /* Slider Desktop Bilanciato Awwwards */
             .js-slider-section { padding: 8rem 0; }
             .slider-main-wrapper { height: 550px; }
             .slide { flex-direction: row; align-items: center; gap: 6rem; }
             .slide-image-wrapper { flex: 1.2; height: 100%; aspect-ratio: auto; }
             .slide-content { flex: 0.8; }
             
-            .slider-controls { top: 50%; bottom: auto; left: 0; transform: translateY(-50%); justify-content: space-between; pointer-events: none; padding: 0 1rem; }
-            .nav-arrow { pointer-events: auto; width: 70px; height: 70px; }
+            .slider-controls { 
+                top: 50%; 
+                bottom: auto; 
+                left: -3rem; 
+                right: -3rem; 
+                width: calc(100% + 6rem); 
+                transform: translateY(-50%); 
+                justify-content: space-between; 
+                pointer-events: none; 
+                padding: 0; 
+                z-index: 20;
+            }
+            .nav-arrow { pointer-events: auto; width: 70px; height: 70px; background-color: rgba(255,255,255,0.03); }
         }
     </style>
 </head>
@@ -344,9 +399,15 @@
                         </text>
                     </svg>
                 </div>
-                <div class="split-left js-reveal">
-                    <h2>Artigianato<br><em class="italic-accent">digitale.</em></h2>
+                
+                <!-- ANIMAZIONE WOW INTEGRATA -->
+                <div class="split-left js-wow-reveal">
+                    <h2 class="wow-heading">
+                        <span class="mask"><span class="text">Artigianato</span></span><br>
+                        <span class="mask"><span class="text"><em class="italic-accent">digitale.</em></span></span>
+                    </h2>
                 </div>
+                
                 <div class="split-right js-reveal">
                     <p class="lead">Restituiamo il <span class="text-accent">pieno controllo</span> alle aziende, progettando asset web esclusivi e strutturalmente sicuri.</p>
                     <p>Rifiutiamo le logiche degli abbonamenti vincolanti e dei temi prefabbricati. Il nostro approccio restituisce valore all'azienda: consegniamo <span class="text-accent">codice proprietario</span>, scalabile e destinato a durare nel tempo, cucito esattamente sulle necessità specifiche del tuo business.</p>
@@ -477,8 +538,8 @@
                 });
             });
 
-            // Reveal Intersection Observer
-            const revealElements = document.querySelectorAll('.js-reveal');
+            // Reveal Intersection Observer (Aggiornato per supportare sia js-reveal che js-wow-reveal)
+            const revealElements = document.querySelectorAll('.js-reveal, .js-wow-reveal');
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -503,19 +564,15 @@
                 const currentSlide = slides[current];
                 const nextSlide = slides[newIndex];
                 
-                // Reset della maschera clip del vecchio slide prima di nasconderlo completamente
                 currentSlide.classList.remove('active');
                 
-                // Attiviamo il nuovo slide
                 current = newIndex;
                 nextSlide.classList.add('active');
                 
-                // Cambio colore di sfondo sincronizzato fluido
                 const theme = nextSlide.getAttribute('data-theme');
                 bgSection.style.backgroundColor = theme;
                 bgFooter.style.backgroundColor = theme;
 
-                // Lock del trigger per la durata esatta dell'animazione CSS (1.2 secondi)
                 setTimeout(() => { isAnimating = false; }, 1200);
             }
 
@@ -535,7 +592,6 @@
                     mainNav.classList.toggle('active');
                 });
 
-                // Chiude la card se clicchi su un link o fuori
                 document.querySelectorAll('.js-nav a').forEach(link => {
                     link.addEventListener('click', () => {
                         document.body.classList.remove('menu-open');

@@ -221,7 +221,7 @@
            ========================================================================== */
         .metrics-section { 
             background: var(--color-dark); color: var(--color-white); 
-            padding: var(--space-md) 0; /* Ridotto il padding eccessivo */
+            padding: var(--space-md) 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .metrics-grid { 
@@ -239,15 +239,46 @@
            ========================================================================== */
         .services-section { background: var(--color-stone); }
         .services-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); }
-        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); } }
 
+        /* Design Pulito e Professionale per le Card */
         .service-card {
-            background: var(--color-white); padding: var(--space-md); border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column;
+            background: transparent; 
+            padding: var(--space-md) 0; 
+            border: none;
+            border-top: 1px solid rgba(0,0,0,0.1); 
+            border-radius: 0;
+            box-shadow: none; 
+            display: flex; 
+            flex-direction: column;
+            transition: border-color 0.4s ease;
         }
-        .card-number { font-family: var(--font-serif); font-size: 2.5rem; color: var(--color-accent); line-height: 1; margin-bottom: var(--space-sm); }
-        .service-card h3 { font-family: var(--font-sans); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .service-card p { font-size: 1rem; color: #555; line-height: 1.6; }
+        .service-card:hover {
+            border-top-color: var(--color-accent);
+        }
+        .card-number { 
+            font-family: var(--font-sans); 
+            font-size: 0.9rem; 
+            font-weight: 700;
+            letter-spacing: 0.05em; 
+            color: var(--color-dark); 
+            opacity: 0.3;
+            line-height: 1; 
+            margin-bottom: var(--space-sm); 
+        }
+        .service-card h3 { 
+            font-family: var(--font-serif); 
+            font-size: 2rem; 
+            font-weight: 400; 
+            letter-spacing: -0.02em;
+            margin-bottom: 0.8rem; 
+            line-height: 1.1;
+        }
+        .service-card p { 
+            font-size: 1rem; 
+            color: #555; 
+            line-height: 1.6; 
+        }
 
         /* ==========================================================================
            6. CASI STUDIO 
@@ -258,7 +289,8 @@
         .case-slide.active { display: grid; }
         @media (min-width: 1024px) { .case-slide { grid-template-columns: 1.2fr 0.8fr; align-items: center; } }
         
-        .case-visual { width: 100%; aspect-ratio: 16/9; max-height: 450px; overflow: hidden; border-radius: 8px; position: relative; }
+        /* Modificato case-visual per gestire l'elemento <a> */
+        .case-visual { display: block; width: 100%; aspect-ratio: 16/9; max-height: 450px; overflow: hidden; border-radius: 8px; position: relative; cursor: pointer; }
         .case-visual img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); transition: transform 0.8s ease; }
         .case-visual:hover img { transform: scale(1.03); }
         
@@ -423,9 +455,9 @@
                 <div class="js-reveal">
                     
                     <div class="case-slide active">
-                        <div class="case-visual">
+                        <a href="https://secondo-xi.vercel.app/" class="case-visual">
                             <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200&auto=format&fit=crop" alt="MindNeuro Piattaforma Medica" loading="lazy">
-                        </div>
+                        </a>
                         <div class="case-info">
                             <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--color-accent); font-weight: 600;">Healthtech & AI</span>
                             <h3 class="case-client">MindNeuro</h3>
@@ -448,9 +480,34 @@
                     </div>
 
                     <div class="case-slide">
-                        <div class="case-visual">
-                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop" alt="Piattaforma Web Pizzeria" loading="lazy">
+                        <a href="https://aura.luca-dordoni1.workers.dev/" class="case-visual">
+                            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop" alt="Aura Interior Design" loading="lazy">
+                        </a>
+                        <div class="case-info">
+                            <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--color-accent); font-weight: 600;">Interior Design</span>
+                            <h3 class="case-client">Aura Studio</h3>
+                            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.6;">Realizzazione di una vetrina digitale premium per uno studio di interior design, focalizzata sull'eleganza visiva e sulla fluidità della navigazione per esaltare i progetti architettonici.</p>
+                            
+                            <div class="case-data-grid">
+                                <div class="data-box">
+                                    <h4>Problema</h4>
+                                    <p>Presentazione frammentata del portfolio.</p>
+                                </div>
+                                <div class="data-box">
+                                    <h4>Risultato</h4>
+                                    <p class="highlight">Esperienza visiva immersiva</p>
+                                </div>
+                            </div>
+                            <a href="https://aura.luca-dordoni1.workers.dev/" class="btn-premium" style="width: max-content; padding: 0.6rem 1.4rem; font-size: 0.75rem;">
+                                <span>Visita il sito ↗</span>
+                            </a>
                         </div>
+                    </div>
+
+                    <div class="case-slide">
+                        <a href="https://amana-sito.vercel.app/" class="case-visual">
+                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop" alt="Piattaforma Web Pizzeria" loading="lazy">
+                        </a>
                         <div class="case-info">
                             <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--color-accent); font-weight: 600;">Food & Beverage</span>
                             <h3 class="case-client">Amana Pizzeria</h3>

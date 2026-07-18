@@ -80,22 +80,23 @@
         .js-wow-reveal.is-revealed .mask:nth-child(2) .text { transition-delay: 0.1s; }
         .js-wow-reveal.is-revealed .mask:nth-child(3) .text { transition-delay: 0.2s; }
 
-        /* BUTTONS */
+        /* BUTTONS - Modificati per un look più professionale (bordo smussato, no pillola) */
         .btn-premium { 
             display: inline-flex; align-items: center; justify-content: center;
             padding: calc(var(--space-sm) * 0.8) calc(var(--space-md) * 1.2); 
+            min-height: 48px;
             background: var(--color-dark); color: var(--color-white); 
             font-family: var(--font-sans); font-weight: 600; font-size: 0.85rem; 
-            text-transform: uppercase; letter-spacing: 0.08em; border-radius: 100px;
+            text-transform: uppercase; letter-spacing: 0.08em; border-radius: 8px;
             position: relative; overflow: hidden; transition: box-shadow 0.4s ease; border: none;
         }
         .btn-premium::after {
             content: ''; position: absolute; inset: 0; background: var(--color-accent);
-            border-radius: 100px; transform: scaleY(0); transform-origin: bottom;
+            border-radius: 8px; transform: scaleY(0); transform-origin: bottom;
             transition: transform 0.5s var(--ease-out-expo); z-index: -1;
         }
         .btn-premium:hover::after { transform: scaleY(1); transform-origin: top; }
-        .btn-premium:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.15); color: var(--color-dark); }
+        .btn-premium:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.08); color: var(--color-dark); }
         .btn-premium span { position: relative; z-index: 2; transition: color 0.4s ease; }
 
         /* ==========================================================================
@@ -241,11 +242,15 @@
         }
         .bento-grid::-webkit-scrollbar { display: none; }
         
+        /* Card migliorate: più padding, bordo smussato moderato, ombra sottile */
         .bento-card {
             flex: 0 0 85vw;
             scroll-snap-align: center;
-            background: var(--color-dark-alt); border: 1px solid rgba(240, 239, 234, 0.15);
-            padding: var(--space-md); border-radius: 20px; display: flex; flex-direction: column;
+            background: var(--color-dark-alt); 
+            border: 1px solid rgba(240, 239, 234, 0.08); /* Bordo ammorbidito */
+            padding: calc(var(--space-md) * 1.2); /* Respiro aumentato */
+            border-radius: 8px; /* Forme più squadrate e pro */
+            display: flex; flex-direction: column;
             justify-content: space-between; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
         }
         .bento-card:hover { transform: translateY(-4px); }
@@ -321,10 +326,13 @@
             .case-block:nth-child(even) .case-info { order: 1; }
         }
         
+        /* Immagini: Proporzioni fisse e altezza limitata per visualizzazione ideale su mobile */
         .case-visual { 
-            display: block; width: 100%; aspect-ratio: 16/10; overflow: hidden; 
-            border-radius: 12px; position: relative; cursor: pointer;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            display: block; width: 100%; aspect-ratio: 16/9; 
+            max-height: 400px;
+            overflow: hidden; 
+            border-radius: 8px; position: relative; cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); /* Ombra più elegante */
             border: 1px solid rgba(255,255,255,0.05);
         }
         .case-visual::after {
@@ -354,9 +362,10 @@
         
         .case-info p { color: rgba(240, 239, 234, 0.7); font-size: 1.05rem; line-height: 1.6; margin-bottom: var(--space-md); font-weight: 300; }
         
+        /* Card Info: Più respiro */
         .case-data-grid { 
             display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); 
-            background: rgba(255,255,255,0.02); padding: var(--space-sm); 
+            background: rgba(255,255,255,0.02); padding: var(--space-md); 
             border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: var(--space-md); 
         }
@@ -390,7 +399,14 @@
         .contact-info h2 { font-size: clamp(2.5rem, 4vw, 4.5rem); margin-bottom: var(--space-sm); }
         .contact-email { font-family: var(--font-sans); font-size: 1.5rem; font-weight: 600; color: var(--color-dark); border-bottom: 2px solid var(--color-accent); padding-bottom: 0.1rem; display: inline-block; margin-bottom: var(--space-lg); }
         
-        .contact-form { display: flex; flex-direction: column; gap: var(--space-md); background: var(--color-white); padding: var(--space-lg); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        /* Modulo contatti: design più sobrio, senza ombre esagerate */
+        .contact-form { 
+            display: flex; flex-direction: column; gap: var(--space-md); 
+            background: var(--color-white); padding: calc(var(--space-lg) * 0.8); 
+            border-radius: 8px; 
+            border: 1px solid rgba(0,0,0,0.05); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04); 
+        }
         .input-group { position: relative; display: flex; flex-direction: column; }
         .input-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: #555; margin-bottom: 0.5rem; }
         .premium-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid #ddd; padding: 0.5rem 0; font-family: var(--font-sans); font-size: 1.1rem; color: var(--color-dark); transition: border-color 0.3s ease; border-radius: 0; }
@@ -414,7 +430,7 @@
         .modal-content {
             background: var(--color-stone); color: var(--color-dark);
             width: 100%; max-width: 800px; max-height: 85vh; overflow-y: auto;
-            padding: var(--space-lg); border-radius: 16px; position: relative;
+            padding: var(--space-lg); border-radius: 8px; position: relative;
             transform: translateY(30px); transition: transform 0.4s var(--ease-out-expo);
         }
         .legal-modal.active .modal-content { transform: translateY(0); }
@@ -796,17 +812,6 @@
         </div>
     </div>
 
-    <!-- Banner Cookie (Nascosto poiché non necessario al momento) -->
-    <!--
-    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: var(--color-dark-alt); color: var(--color-white); padding: var(--space-sm) var(--space-md); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-family: var(--font-sans); box-shadow: 0 -10px 40px rgba(0,0,0,0.5);">
-        <p style="font-size: 0.9rem; margin: 0; text-align: center; max-width: 800px; color: rgba(255,255,255,0.8);">Questo sito utilizza cookie per migliorare la tua esperienza di navigazione. Chiudendo questo banner o cliccando su "Accetta", acconsenti al loro utilizzo.</p>
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <button id="accept-cookies" class="btn-premium" style="padding: 0.5rem 1.5rem; font-size: 0.75rem;"><span>Accetta</span></button>
-            <button class="js-open-modal" data-target="cookie-modal" style="background:none; border:none; font-size: 0.8rem; text-decoration: underline; color: rgba(255,255,255,0.6); cursor:pointer;">Scopri di più</button>
-        </div>
-    </div>
-    -->
-
     <!-- Footer Aggiornato -->
     <footer style="background: var(--color-dark); color: white; padding: var(--space-lg) 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
         <p style="font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;">&copy; 2026 Studiocodice. Architecture for the web.</p>
@@ -833,7 +838,7 @@
                     const targetModal = document.getElementById(targetId);
                     if (targetModal) {
                         targetModal.classList.add('active');
-                        document.body.style.overflow = 'hidden'; // Blocca lo scroll della pagina
+                        document.body.style.overflow = 'hidden'; 
                     }
                 });
             });
@@ -944,7 +949,7 @@
 
                     setTimeout(() => {
                         contactForm.parentElement.innerHTML = `
-                            <div style="background: var(--color-white); padding: var(--space-lg); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: center;">
+                            <div style="background: var(--color-white); padding: var(--space-lg); border-radius: 8px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center;">
                                 <h3 style="font-family: var(--font-serif); font-size: 2.5rem; line-height: 1; color: var(--color-dark); margin-bottom: 1rem;">Ricevuto.</h3>
                                 <p style="color: #555; font-size: 1.1rem;">La tua richiesta è nel nostro sistema protetto. Sarai ricontattato entro 24 ore dal nostro team.</p>
                             </div>

@@ -217,7 +217,7 @@
         @keyframes orbit { 100% { transform: rotate(360deg); } }
 
         /* ==========================================================================
-           8. MANIFESTO (Bento Grid)
+           8. MANIFESTO (Bento Grid) - Modificato per scorrimento orizzontale mobile
            ========================================================================== */
         .features-section {
             padding-bottom: var(--space-section);
@@ -228,12 +228,24 @@
         }
         .section-header { margin-bottom: var(--space-lg); }
         .section-title-modern { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; font-weight: 400; }
-        .bento-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-sm); }
-        @media (min-width: 768px) {
-            .bento-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(240px, auto); }
-            .bento-large { grid-column: span 2; }
+        
+        /* Mobile: Flexbox e Scrolling Orizzontale Edge-to-Edge */
+        .bento-grid { 
+            display: flex; 
+            overflow-x: auto; 
+            gap: var(--space-sm); 
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Nasconde su Firefox */
+            -webkit-overflow-scrolling: touch;
+            /* Permette lo scorrimento fluid "edge-to-edge" annullando il padding del container su mobile */
+            margin: 0 calc(var(--space-md) * -1);
+            padding: 0 var(--space-md) var(--space-sm) var(--space-md);
         }
+        .bento-grid::-webkit-scrollbar { display: none; /* Nasconde su Chrome/Safari/Edge */ }
+        
         .bento-card {
+            flex: 0 0 85vw; /* Occupa l'85% dello schermo su mobile in modo da mostrare la card successiva */
+            scroll-snap-align: center;
             background: var(--color-dark-alt); border: 1px solid rgba(240, 239, 234, 0.15);
             padding: var(--space-md); border-radius: 20px; display: flex; flex-direction: column;
             justify-content: space-between; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
@@ -242,6 +254,20 @@
         .bento-card h3 { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin-bottom: var(--space-sm); }
         .bento-card p { color: rgba(240, 239, 234, 0.7); font-size: 1rem; line-height: 1.6; }
         .bento-number { font-family: var(--font-serif); font-size: 3.5rem; color: rgba(195, 159, 97, 0.2); align-self: flex-end; line-height: 1; }
+
+        @media (min-width: 768px) {
+            /* Desktop: Ritorna alla perfetta griglia asimmetrica originale */
+            .bento-grid { 
+                display: grid; 
+                grid-template-columns: repeat(3, 1fr); 
+                grid-auto-rows: minmax(240px, auto); 
+                overflow-x: visible; 
+                margin: 0; 
+                padding: 0; 
+            }
+            .bento-card { flex: auto; scroll-snap-align: none; }
+            .bento-large { grid-column: span 2; }
+        }
 
         /* ==========================================================================
            4. METRICHE

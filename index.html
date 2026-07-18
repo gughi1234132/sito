@@ -217,7 +217,7 @@
         @keyframes orbit { 100% { transform: rotate(360deg); } }
 
         /* ==========================================================================
-           8. MANIFESTO (Bento Grid) - Modificato per scorrimento orizzontale mobile
+           8. MANIFESTO (Bento Grid)
            ========================================================================== */
         .features-section {
             padding-bottom: var(--space-section);
@@ -229,22 +229,20 @@
         .section-header { margin-bottom: var(--space-lg); }
         .section-title-modern { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; font-weight: 400; }
         
-        /* Mobile: Flexbox e Scrolling Orizzontale Edge-to-Edge */
         .bento-grid { 
             display: flex; 
             overflow-x: auto; 
             gap: var(--space-sm); 
             scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Nasconde su Firefox */
+            scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
-            /* Permette lo scorrimento fluid "edge-to-edge" annullando il padding del container su mobile */
             margin: 0 calc(var(--space-md) * -1);
             padding: 0 var(--space-md) var(--space-sm) var(--space-md);
         }
-        .bento-grid::-webkit-scrollbar { display: none; /* Nasconde su Chrome/Safari/Edge */ }
+        .bento-grid::-webkit-scrollbar { display: none; }
         
         .bento-card {
-            flex: 0 0 85vw; /* Occupa l'85% dello schermo su mobile in modo da mostrare la card successiva */
+            flex: 0 0 85vw;
             scroll-snap-align: center;
             background: var(--color-dark-alt); border: 1px solid rgba(240, 239, 234, 0.15);
             padding: var(--space-md); border-radius: 20px; display: flex; flex-direction: column;
@@ -256,7 +254,6 @@
         .bento-number { font-family: var(--font-serif); font-size: 3.5rem; color: rgba(195, 159, 97, 0.2); align-self: flex-end; line-height: 1; }
 
         @media (min-width: 768px) {
-            /* Desktop: Ritorna alla perfetta griglia asimmetrica originale */
             .bento-grid { 
                 display: grid; 
                 grid-template-columns: repeat(3, 1fr); 
@@ -305,7 +302,7 @@
         .service-card p { font-size: 1rem; color: #555; line-height: 1.6; }
 
         /* ==========================================================================
-           6. CASI STUDIO (Disposti verticalmente & Testi Animati)
+           6. CASI STUDIO 
            ========================================================================== */
         .cases-section { background: #0b0b0c; color: var(--color-white); position: relative; }
         
@@ -319,8 +316,6 @@
         }
         @media (min-width: 1024px) { 
             .case-block { grid-template-columns: 1.2fr 0.8fr; gap: var(--space-xl); align-items: stretch; } 
-            
-            /* Layout Alternato */
             .case-block:nth-child(even) { grid-template-columns: 0.8fr 1.2fr; }
             .case-block:nth-child(even) .case-visual-wrapper { order: 2; }
             .case-block:nth-child(even) .case-info { order: 1; }
@@ -369,7 +364,6 @@
         .data-box p { font-size: 0.95rem; font-weight: 400; margin-bottom: 0; color: var(--color-white); }
         .data-box .highlight { color: var(--color-accent); font-weight: 600; font-size: 1.15rem; }
 
-        /* NUOVA ANIMAZIONE STAGGER PER TESTI CASI STUDIO */
         .case-block .case-info > div > * {
             opacity: 0;
             transform: translateY(20px);
@@ -405,6 +399,34 @@
         /* ANIMATION REVEALS GLOBALI */
         .js-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
         .js-reveal.is-revealed { opacity: 1; transform: translateY(0); }
+
+        /* ==========================================================================
+           8. MODALS (Privacy & Cookie)
+           ========================================================================== */
+        .legal-modal {
+            position: fixed; inset: 0; background: rgba(7, 7, 7, 0.9);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+            padding: var(--space-md);
+        }
+        .legal-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--color-stone); color: var(--color-dark);
+            width: 100%; max-width: 800px; max-height: 85vh; overflow-y: auto;
+            padding: var(--space-lg); border-radius: 16px; position: relative;
+            transform: translateY(30px); transition: transform 0.4s var(--ease-out-expo);
+        }
+        .legal-modal.active .modal-content { transform: translateY(0); }
+        .modal-close {
+            position: absolute; top: var(--space-sm); right: var(--space-sm);
+            background: none; border: none; font-size: 2rem; line-height: 1;
+            color: var(--color-dark); cursor: pointer; padding: 5px 10px;
+        }
+        .modal-content h3 { font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .modal-content h4 { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 0.5rem 0; }
+        .modal-content p, .modal-content ul { font-size: 0.95rem; line-height: 1.6; color: #444; margin-bottom: 1rem; }
+        .modal-content ul { padding-left: 1.5rem; }
     </style>
 </head>
 <body>
@@ -700,10 +722,6 @@
                     
                     <a href="mailto:hello@studiocodice.it" class="contact-email">hello@studiocodice.it</a>
                     
-                    <div>
-                        <p style="font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; color: #777;">Sede Operativa</p>
-                        <p>Via Tortona 14<br>20144, Milano (MI)</p>
-                    </div>
                 </div>
                 
                 <div class="js-reveal">
@@ -723,7 +741,11 @@
                             <textarea id="details" name="details" rows="3" class="premium-input" style="resize: vertical;" required></textarea>
                         </div>
                         
-                        <button type="submit" class="btn-premium btn-submit" style="margin-top: 1rem; width: 100%;">
+                        <p style="font-size: 0.75rem; color: #777; margin-top: 0.5rem;">
+                            Inviando questo modulo dichiari di aver letto e compreso la nostra <button type="button" class="js-open-modal" data-target="privacy-modal" style="background:none; border:none; color:var(--color-dark); text-decoration:underline; font-family:inherit; font-size:inherit; padding:0;">Privacy Policy</button>.
+                        </p>
+
+                        <button type="submit" class="btn-premium btn-submit" style="margin-top: 0.5rem; width: 100%;">
                             <span>Invia Richiesta</span>
                         </button>
                     </form>
@@ -733,13 +755,105 @@
         </section>
     </main>
 
-    <footer style="background: var(--color-dark); color: white; padding: var(--space-md) 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
-        <p style="font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5);">&copy; 2026 Studiocodice. Architecture for the web.</p>
+    <!-- Modals Legali -->
+    <div id="privacy-modal" class="legal-modal">
+        <div class="modal-content">
+            <button class="modal-close js-close-modal">&times;</button>
+            <h3>Privacy Policy</h3>
+            <p>La presente Privacy Policy descrive le modalità di gestione del sito web in riferimento al trattamento dei dati personali degli utenti che lo consultano e che interagiscono con i nostri servizi web (form di contatto).</p>
+            
+            <h4>1. Titolare del Trattamento</h4>
+            <p>Studiocodice.<br>Email: hello@studiocodice.it<br>P.IVA: [INSERIRE P.IVA]</p>
+            
+            <h4>2. Tipologia di dati trattati e finalità</h4>
+            <p><strong>Dati forniti volontariamente dall'utente:</strong> L'invio facoltativo, esplicito e volontario di messaggi tramite il modulo di contatto o agli indirizzi indicati su questo sito comporta la successiva acquisizione dell'indirizzo del mittente, necessario per rispondere alle richieste, nonché degli eventuali altri dati personali inseriti nella missiva (es. Nome, Azienda, Dettagli del Progetto).</p>
+            <p>Questi dati vengono utilizzati al solo fine di eseguire il servizio o la prestazione richiesta e non saranno ceduti a terzi per scopi commerciali.</p>
+            
+            <h4>3. Modalità del trattamento e conservazione</h4>
+            <p>I dati personali sono trattati con strumenti automatizzati per il tempo strettamente necessario a conseguire gli scopi per cui sono stati raccolti. Specifiche misure di sicurezza sono osservate per prevenire la perdita dei dati, usi illeciti o non corretti ed accessi non autorizzati.</p>
+            
+            <h4>4. Diritti degli interessati</h4>
+            <p>I soggetti cui si riferiscono i dati personali hanno il diritto in qualunque momento di ottenere la conferma dell'esistenza o meno dei medesimi dati e di conoscerne il contenuto e l'origine, verificarne l'esattezza o chiederne l'integrazione o l'aggiornamento, oppure la rettificazione (art. 7 del Codice in materia di protezione dei dati personali e artt. 15-22 del GDPR). Le richieste vanno rivolte al Titolare del trattamento.</p>
+        </div>
+    </div>
+
+    <div id="cookie-modal" class="legal-modal">
+        <div class="modal-content">
+            <button class="modal-close js-close-modal">&times;</button>
+            <h3>Cookie Policy</h3>
+            <p>Questo sito web non utilizza cookie di profilazione o tracciamento.</p>
+            
+            <h4>Cosa sono i cookie?</h4>
+            <p>I cookie sono stringhe di testo di piccole dimensioni che i siti visitati dall'utente inviano al suo terminale, dove vengono memorizzati per essere poi ritrasmessi agli stessi siti alla successiva visita del medesimo utente.</p>
+            
+            <h4>Quali cookie utilizziamo?</h4>
+            <p>Attualmente, questo sito è una struttura statica e <strong>non rilascia alcun cookie analytics di terze parti (es. Google Analytics) né cookie di profilazione per fini pubblicitari</strong>.</p>
+            <p>Potremmo utilizzare esclusivamente <strong>cookie tecnici e/o archiviazione locale (Local Storage)</strong> strettamente necessari per il corretto funzionamento dell'interfaccia utente (ad esempio, per ricordare l'eventuale chiusura di popup o preferenze di visualizzazione della pagina).</p>
+            <p>Poiché non vi è attività di profilazione o tracciamento attivo, per l'utilizzo di questo sito non è richiesto il preventivo consenso dell'utente all'installazione dei cookie, come previsto dalla normativa vigente.</p>
+            
+            <h4>Gestione dei Cookie nel Browser</h4>
+            <p>In ogni caso, l'utente può decidere se accettare o meno i cookie (o cancellare la memoria locale) utilizzando le impostazioni del proprio browser.</p>
+        </div>
+    </div>
+
+    <!-- Banner Cookie (Nascosto poiché non necessario al momento) -->
+    <!--
+    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: var(--color-dark-alt); color: var(--color-white); padding: var(--space-sm) var(--space-md); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-family: var(--font-sans); box-shadow: 0 -10px 40px rgba(0,0,0,0.5);">
+        <p style="font-size: 0.9rem; margin: 0; text-align: center; max-width: 800px; color: rgba(255,255,255,0.8);">Questo sito utilizza cookie per migliorare la tua esperienza di navigazione. Chiudendo questo banner o cliccando su "Accetta", acconsenti al loro utilizzo.</p>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <button id="accept-cookies" class="btn-premium" style="padding: 0.5rem 1.5rem; font-size: 0.75rem;"><span>Accetta</span></button>
+            <button class="js-open-modal" data-target="cookie-modal" style="background:none; border:none; font-size: 0.8rem; text-decoration: underline; color: rgba(255,255,255,0.6); cursor:pointer;">Scopri di più</button>
+        </div>
+    </div>
+    -->
+
+    <!-- Footer Aggiornato -->
+    <footer style="background: var(--color-dark); color: white; padding: var(--space-lg) 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+        <p style="font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;">&copy; 2026 Studiocodice. Architecture for the web.</p>
+        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-bottom: 1.5rem; font-family: var(--font-sans);">
+            Studiocodice | P.IVA: [INSERIRE P.IVA]
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 0.75rem; font-family: var(--font-sans);">
+            <button class="js-open-modal" data-target="privacy-modal" style="background:none; border:none; color: rgba(255,255,255,0.5); font-size:inherit; font-family:inherit; text-decoration: none; transition: color 0.3s; cursor: pointer;" onmouseover="this.style.color='var(--color-white)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Privacy Policy</button>
+            <button class="js-open-modal" data-target="cookie-modal" style="background:none; border:none; color: rgba(255,255,255,0.5); font-size:inherit; font-family:inherit; text-decoration: none; transition: color 0.3s; cursor: pointer;" onmouseover="this.style.color='var(--color-white)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Cookie Policy</button>
+        </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            /* --- 0. Gestione Modals (Privacy e Cookie) --- */
+            const openModalBtns = document.querySelectorAll('.js-open-modal');
+            const closeBtns = document.querySelectorAll('.js-close-modal');
+            const modals = document.querySelectorAll('.legal-modal');
+
+            openModalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('data-target');
+                    const targetModal = document.getElementById(targetId);
+                    if (targetModal) {
+                        targetModal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; // Blocca lo scroll della pagina
+                    }
+                });
+            });
+
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.closest('.legal-modal').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
             /* --- 1. Gestione Menu Mobile Drawer --- */
             const menuToggle = document.querySelector('.js-menu-toggle');
             const mobileNav = document.querySelector('.js-mobile-nav');

@@ -130,15 +130,17 @@
         .nav-links a:hover::after { width: 100%; }
 
         .mobile-nav {
-            position: fixed; top: 0; right: 0; width: 100%; height: 100vh;
+            position: fixed; top: 0; right: 0; width: 50vw; height: 50vh;
             background: var(--color-dark); display: flex; flex-direction: column;
             justify-content: center; align-items: center; gap: var(--space-md);
-            padding: var(--space-lg); 
-            transform: translateY(-100%); transition: transform 0.8s var(--ease-out-expo);
+            padding: var(--space-md); 
+            transform: translateX(100%); transition: transform 0.8s var(--ease-out-expo);
             z-index: 999;
+            border-bottom-left-radius: 20px;
+            box-shadow: -5px 5px 20px rgba(0,0,0,0.3);
         }
-        .mobile-nav.active { transform: translateY(0); }
-        .mobile-nav a { font-family: var(--font-serif); font-size: 3rem; font-weight: 400; color: var(--color-white); letter-spacing: -0.02em; }
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; color: var(--color-white); letter-spacing: -0.02em; text-align: center;}
         
         .menu-toggle {
             display: block; background: none; border: none; cursor: pointer;
@@ -165,7 +167,7 @@
         .hero { 
             min-height: 100vh; display: flex; align-items: center; 
             background-color: var(--color-dark); color: var(--color-stone);
-            overflow: hidden; position: relative; padding-top: 120px; padding-bottom: 60px;
+            overflow: visible; position: relative; padding-top: 120px; padding-bottom: 60px;
         }
         .hero-layout { 
             display: flex; flex-direction: column; gap: 2rem; 
@@ -273,27 +275,6 @@
         }
 
         /* ==========================================================================
-           4. METRICHE
-           ========================================================================== */
-        .metrics-section { 
-            background: var(--color-dark); color: var(--color-white); 
-            padding: var(--space-md) 0 var(--space-lg) 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .metrics-grid { 
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-            padding-top: var(--space-sm); text-align: center;
-        }
-        @media (min-width: 768px) { .metrics-grid { text-align: left; gap: var(--space-lg); padding-top: var(--space-sm); } }
-        
-        .metric-item { display: flex; flex-direction: column; border-left: 1px solid rgba(255,255,255,0.1); padding-left: var(--space-sm); }
-        .metric-item:first-child { border-left: none; padding-left: 0; }
-        @media (max-width: 767px) { .metric-item { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-sm); padding-left: 0; } .metric-item:first-child { border-top: none; padding-top: 0; } .metrics-grid { grid-template-columns: 1fr; text-align: center; } }
-
-        .metric-num { font-family: var(--font-sans); font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 300; color: var(--color-white); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-        .metric-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); font-weight: 500; }
-
-        /* ==========================================================================
            5. METODOLOGIA
            ========================================================================== */
         .services-section { background: var(--color-stone); }
@@ -304,9 +285,16 @@
             background: transparent; padding: var(--space-lg) var(--space-sm) var(--space-lg) 0; border: none;
             border-bottom: 1px solid rgba(0,0,0,0.1); border-radius: 0;
             display: flex; flex-direction: column; transition: background-color 0.4s ease;
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo), background-color 0.4s ease;
         }
         @media (min-width: 768px) { .service-card { border-bottom: none; border-right: 1px solid rgba(0,0,0,0.1); padding: var(--space-lg); } .service-card:last-child { border-right: none; } }
         
+        .services-grid.is-revealed .service-card { opacity: 1; transform: translateY(0); }
+        .services-grid.is-revealed .service-card:nth-child(1) { transition-delay: 0.1s; }
+        .services-grid.is-revealed .service-card:nth-child(2) { transition-delay: 0.25s; }
+        .services-grid.is-revealed .service-card:nth-child(3) { transition-delay: 0.4s; }
+
         .card-number { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 500; color: var(--color-dark); opacity: 0.4; line-height: 1; margin-bottom: var(--space-md); }
         .service-card h3 { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.1; }
         .service-card p { font-size: 0.95rem; color: #444; line-height: 1.6; font-weight: 300; }
@@ -332,7 +320,7 @@
         }
         
         .case-visual { 
-            display: block; width: 100%; aspect-ratio: 4/3; 
+            display: block; width: 100%; aspect-ratio: 16/9; 
             overflow: hidden; position: relative; cursor: pointer;
             background: #1a1a1a;
         }
@@ -545,25 +533,6 @@
                             <h3>Scalabilità Infinita</h3>
                             <p>L'architettura flessibile permette al tuo ecosistema digitale di crescere senza limiti, supportando picchi di traffico e nuove integrazioni in modo nativo.</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="metrics-section dark-mode">
-            <div class="container">
-                <div class="metrics-grid js-reveal">
-                    <div class="metric-item">
-                        <span class="metric-num">>50M</span>
-                        <span class="metric-label">Revenue generata</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-num">0.0s</span>
-                        <span class="metric-label">Latenza (Headless)</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-num">100%</span>
-                        <span class="metric-label">Codice proprietario</span>
                     </div>
                 </div>
             </div>
